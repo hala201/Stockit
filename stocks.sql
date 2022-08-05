@@ -60,11 +60,9 @@ ContributionRoom INT
 CREATE TABLE Crypto(
 Symbol CHAR(10),
 AccountNumber INT NOT NULL, 
-BuyPrice INT,
-CurrentPrice INT, 
+Price INT,
 Holding INT, 
-BuyValue INT,
-CurrentValue INT,
+Value_ INT,
 Profit INT, 
 Name_ CHAR(50),
 PRIMARY KEY (Symbol, AccountNumber), 
@@ -74,11 +72,9 @@ FOREIGN KEY (AccountNumber) REFERENCES InvestmentAccount (AccountNumber)
 CREATE TABLE Stock(
 Symbol INT,
 AccountNumber INT NOT NULL FOREIGN KEY REFERENCES InvestmentAccount(AccountNumber), 
-BuyPrice INT,
-CurrentPrice INT, 
+Price INT,
 Holding INT, 
-BuyValue INT,
-CurrentValue INT,
+Value_ INT,
 Profit INT, 
 Name_ CHAR(50) FOREIGN KEY REFERENCES Company(Name_),
 smSymbol INT FOREIGN KEY REFERENCES StockMarket(smSymbol)
@@ -97,38 +93,110 @@ Type_ CHAR(50),
 Industry CHAR(50)
 )
 
-INSERT INTO User(SIN_, Name_, EmailID, DOB)
+INSERT INTO User(SIN_, Name_, DOB, EmailID)
 VALUES
-    ('123456789', 'Bruce Wayne', '04/17/1980'),
-    ('987654321', 'Jack Napier', '04/25/1985'),
-    ('135792468', 'Peter Parker', '08/10/2001'),
-    ('246813579', 'Gangandhar Sharstri', '06/19/1970'),
-    ('192837456', 'Barry Allen', '03/14/1996');
-
-Portfolio (ID, NetWorth, EmailID)
+    (123456789, 'Bruce Wayne', '04/17/1980', 'bq@gmail.com'),
+    (987654321, 'Jack Napier', '04/25/1985', 'jn@gmail.com'),
+    (135792468, 'Peter Parker', '08/10/2001', 'pp@gmail.com'),
+    (246813579, 'Gangandhar Sharstri', '06/19/1970', 'gs@gmail.com'),
+    (192837456, 'Barry Allen', '03/14/1996', 'ba@gmail.com');
 
 
-RealEstate (ID, Address_, BuyPrice, Value_, Type_)
+INSERT INTO Portfolio (ID, NetWorth, EmailID)
+VALUES
+    (77, 1000, 'bq@gmail.com'),
+    (69, 2000, 'jn@gmail.com'),
+    (50, 3000, 'pp@gmail.com'),
+    (10, 4000, 'gs@gmail.com'),
+    (33, 5000, 'ba@gmail.com');
 
-ManagedBy (ID, Address_)
 
-Agent (ID, Name_)
+INSERT INTO RealEstate (ID, Address_, BuyPrice, Value_, Type_)
+VALUES
+    (77, '1 Gotham, NY', 1000, 'Residential'),
+    (69, '2 Gotham, NY', 2000, 'Residential'),
+    (50, '3 Gotham, NY', 3000, 'Residential'),
+    (10, '4 Gotham, NY', 4000, 'Residential'),
+    (33, '5 Gotham, NY', 5000, 'Commercial');
 
-Investment Account (AccountNumber, ID, InvestedAmount, UnivestedAmount)
+INSERT INTO ManagedBy (ID, Address_)
+VALUES 
+    (1, '1 Gotham, NY'),
+    (2, '2 Gotham, NY'),
+    (3, '3 Gotham, NY'),
+    (4, '4 Gotham, NY'),
+    (5, '5 Gotham, NY');
 
 
-General(AccountNumber, CapitalGainsTax)
+INSERT INTO Agent (ID, Name_)
+VALUES
+    (1, 'Kris Elliot'),
+    (2, 'Kris Ellen'),
+    (3, 'Kris Ellie'),
+    (4, 'Kris Elves'),
+    (5, 'Kris Elsa');
 
-RRSP (AccountNumber, ContributionRoom)
 
-TFSA (AccountNumber, ContributionRoom)
+INSERT INTO InvestmentAccount (AccountNumber, ID, InvestedAmount, UnivestedAmount)
+VALUES
+    ('QWER1234567890', 77, 500, 1000),
+    ('WWER1234567890', 69, 400, 2000),
+    ('EWER1234567890', 50, 300, 5000),
+    ('RWER1234567890', 10, 200, 5000),
+    ('TWER1234567890', 33, 100, 5000);
 
-Crypto (Symbol, Holding, AccountNumber, BuyPrice, CurrentPrice, 
-BuyValue, CurrentValue, Profit, Name_)
+INSERT INTO General(AccountNumber, CapitalGainsTax)
+VALUES
+    ('QWER1234567890', 770),
+    ('WWER1234567890', 690),
+    ('EWER1234567890', 500),
+    ('RWER1234567890', 100),
+    ('TWER1234567890', 330);
 
-Stock (Symbol, Holding, AccountNumber, BuyPrice, CurrentPrice, 
-BuyValue, CurrentValue, Profit, CompanyName, smSymbol)
+INSERT INTO RRSP (AccountNumber, ContributionRoom)
+VALUES
+    ('QWER1234567890', 7700),
+    ('WWER1234567890', 6900),
+    ('EWER1234567890', 5000),
+    ('RWER1234567890', 1000),
+    ('TWER1234567890', 3300);
 
-Stock Market (smSymbol, Headquarters)
+INSERT INTO TFSA (AccountNumber, ContributionRoom)
+VALUES
+    ('QWER1234567890', 77000),
+    ('WWER1234567890', 69000),
+    ('EWER1234567890', 50000),
+    ('RWER1234567890', 10000),
+    ('TWER1234567890', 33000);
 
-Company (Name_, Type_, Industry)
+INSERT INTO Crypto (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_)
+VALUES
+    ('BTC' , 'QWER1234567890', 77000, 500, 7500, 7000, 'Bitcoin'),
+    ('ETH' , 'WWER1234567890', 69000, 400, 7400, 7000, 'Ethereum'),
+    ('APE' , 'EWER1234567890', 50000, 300, 7300, 7000, 'ApeCoin'),
+    ('ETH' , 'RWER1234567890', 10000, 200, 7200, 7000, 'Ethereum'),
+    ('BTC' , 'TWER1234567890', 33000, 100, 7100, 7000, 'Bitcoin');
+
+INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
+VALUES
+    ('WAYNE' , 'QWER1234567890', 77000, 500, 7500, 7000, 'Bitcoin' , 'NYSEFO'),
+    ('STAR' , 'WWER1234567890', 69000, 400, 7400, 7000, 'Ethereum' , 'TSXUOL'),
+    ('GOOGL' , 'EWER1234567890', 50000, 300, 7300, 7000, 'ApeCoin' , 'NASDAQ'),
+    ('APL' , 'RWER1234567890', 10000, 200, 7200, 7000, 'Ethereum'  , 'NASDAQ'),
+    ('MSFT' , 'TWER1234567890', 33000, 100, 7100, 7000, 'Bitcoin'  , 'NASDAQ');
+INSERT INTO StockMarket (smSymbol, Headquarters)
+VALUES
+    ('NYSEFO', 'NY USA'),
+    ('TSXUOL', 'NY USA'),
+    ('NASDAQ', 'ON Canada'),
+    ('FASDAQ', 'BC Canada'),
+    ('TASDAQ', 'ML Italy');
+
+INSERT INTO Company (Name_, Type_, Industry)
+VALUES
+    ('Gucci', 'Public', 'Fashion'),
+    ('Sofie', 'Public', 'Conglomerate'),
+    ('Apple', 'Public', 'Tech'),
+    ('Microsoft', 'Public', 'Tech'),
+    ('Alpha', 'Public', 'Cosmetics');
+
