@@ -1,3 +1,17 @@
+drop table User;
+drop table Portfolio;
+drop table RealEstate;
+drop table ManagedBy;
+drop table Agent;
+drop table InvestmentAccount;
+drop table General;
+drop table RRSP;
+drop table TFSA;
+drop table Crypto;
+drop table Stock;
+drop table Company;
+drop table StockMarket;
+
 CREATE TABLE User(
 SIN_ INT(9),
 Name_ CHAR(50),
@@ -5,6 +19,8 @@ DOB CHAR(13),
 EmailID CHAR(50),
 PRIMARY KEY(EmailID, SIN_)
 );
+
+grant select on User to public;
 
 CREATE TABLE Portfolio(
 ID INT PRIMARY KEY, 
@@ -14,6 +30,8 @@ FOREIGN KEY(EmailID) REFERENCES User(EmailID),
 UNIQUE(EmailID)
 );
 
+grant select on Portfolio to public;
+
 CREATE TABLE RealEstate(
 Address_ CHAR(50),
 BuyPrice INT, 
@@ -22,16 +40,22 @@ Type_ CHAR(50),
 FOREIGN KEY (pID) REFERENCES Portfolio(ID)
 );
 
+grant select on RealEstate to public;
+
 CREATE TABLE ManagedBy(
 ID INT FOREIGN KEY REFERENCES Agent(ID), 
 Address_ CHAR(50) FOREIGN KEY REFERENCES RealEstate(Address_),
 PRIMARY KEY (ID, Address_)
 );
 
+grant select on ManagedBy to public;
+
 CREATE TABLE Agent(
 ID INT PRIMARY KEY, 
 Name_ CHAR(50)
 );
+
+grant select on Agent to public;
 
 CREATE TABLE InvestmentAccount(
 AccountNumber CHAR(14) PRIMARY KEY, 
@@ -41,21 +65,28 @@ UnivestedAmount INT,
 FOREIGN KEY (ID) REFERENCES Portfolio(ID)
 );
 
+grant select on InvestmentAccount to public;
+
 CREATE TABLE General(
 AccountNumber CHAR(14) PRIMARY KEY, 
 CapitalGainsTax INT
 );
+
+grant select on General to public;
 
 CREATE TABLE RRSP(
 AccountNumber CHAR(14) PRIMARY KEY,
 ContributionRoom INT
 );
 
+grant select on RRSP to public;
+
 CREATE TABLE TFSA(
 AccountNumber CHAR(14) PRIMARY KEY,
 ContributionRoom INT
 );
 
+grant select on TFSA to public;
 
 CREATE TABLE Crypto(
 Symbol CHAR(10),
@@ -67,7 +98,9 @@ Profit INT,
 Name_ CHAR(50),
 PRIMARY KEY (Symbol, AccountNumber), 
 FOREIGN KEY (AccountNumber) REFERENCES InvestmentAccount (AccountNumber)
-)
+);
+
+grant select on Crypto to public;
 
 CREATE TABLE Stock(
 Symbol INT,
@@ -79,19 +112,24 @@ Profit INT,
 Name_ CHAR(50) FOREIGN KEY REFERENCES Company(Name_),
 smSymbol INT FOREIGN KEY REFERENCES StockMarket(smSymbol)
 PRIMARY KEY (Symbol, AccountNumber)
+);
 
-)
-
-CREATE TABLE StockMarket(
-smSymbol INT PRIMARY KEY, 
-headquarters CHAR(50),
-)
+grant select on Stock to public;
 
 CREATE TABLE Company(
 Name_ CHAR(50) PRIMARY KEY,
 Type_ CHAR(50),
 Industry CHAR(50)
-)
+);
+
+grant select on Company to public;
+
+CREATE TABLE StockMarket(
+smSymbol INT PRIMARY KEY, 
+headquarters CHAR(50),
+);
+
+grant select on StockMarket to public;
 
 INSERT INTO User(SIN_, Name_, DOB, EmailID)
 VALUES
