@@ -18,14 +18,13 @@
 
 <html>
 <head>
-    <title>CPSC 304 PHP/Oracle Demonstration</title>
+    <title>Investment Application</title>
 </head>
 
 <body>
-<h2>Reset</h2>
-<p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
+<h2>Start Session</h2>
 
-<form method="POST" action="stocks.php">
+<form method="POST" action="main.php">
     <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
     <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
     <p><input type="submit" value="Reset" name="reset"></p>
@@ -33,24 +32,28 @@
 
 <hr />
 
-<h2>Insert Values into DemoTable</h2>
-<form method="POST" action="stocks.php"> <!--refresh page when submitted-->
+<h2>Sign up</h2>
+<form method="POST" action="main.php"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-    Number: <input type="text" name="insNo"> <br /><br />
-    Name: <input type="text" name="insName"> <br /><br />
+    SIN          : <input type="text" name="sin"> <br /><br />
+    Name         : <input type="text" name="Name"> <br /><br />
+    Date of Birth: <input type="text" name="dob"> <br /><br />
+    EmailID      : <input type="text" name="email"> <br /><br />
 
     <input type="submit" value="Insert" name="insertSubmit"></p>
 </form>
 
 <hr />
 
-<h2>Update Name in DemoTable</h2>
-<p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
+<h2>Edit your user information</h2>
+<p>If you are a current user, you can update your email or name below. The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
-<form method="POST" action="stocks.php"> <!--refresh page when submitted-->
+<form method="POST" action="main.php"> <!--refresh page when submitted-->
     <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
     Old Name: <input type="text" name="oldName"> <br /><br />
     New Name: <input type="text" name="newName"> <br /><br />
+    Old Email: <input type="text" name="newEmail"> <br /><br />
+    New Email: <input type="text" name="newEmail"> <br /><br />
 
     <input type="submit" value="Update" name="updateSubmit"></p>
 </form>
@@ -58,7 +61,7 @@
 <hr />
 
 <h2>Count the Tuples in DemoTable</h2>
-<form method="GET" action="stocks.php"> <!--refresh page when submitted-->
+<form method="GET" action="main.php"> <!--refresh page when submitted-->
     <input type="hidden" id="countTupleRequest" name="countTupleRequest">
     <input type="submit" name="countTuples"></p>
 </form>
@@ -180,9 +183,11 @@ function handleUpdateRequest() {
 
     $old_name = $_POST['oldName'];
     $new_name = $_POST['newName'];
-
+    $old_email = $_POST['oldEmail'];
+    $new_email = $_POST['newEmail'];
     // you need the wrap the old name and new name values with single quotations
-    executePlainSQL("UPDATE demoTable SET name='" . $new_name . "' WHERE name='" . $old_name . "'");
+    executePlainSQL("UPDATE User_ SET Name_='" . $new_name . "' WHERE Name_='" . $old_name . "'");
+    executePlainSQL("UPDATE User_ SET Email='" . $new_email . "' WHERE EmailID='" . $old_email . "'");
     OCICommit($db_conn);
 }
 
@@ -202,15 +207,17 @@ function handleInsertRequest() {
 
     //Getting the values from user and insert data into the table
     $tuple = array (
-        ":bind1" => $_POST['insNo'],
-        ":bind2" => $_POST['insName']
+        ":bind1" => $_POST['sin'],
+        ":bind2" => $_POST['insName'],
+        ":bind3" => $_POST['dob'],
+        ":bind4" => $_POST['email']
     );
 
     $alltuples = array (
         $tuple
     );
 
-    executeBoundSQL("insert into demoTable values (:bind1, :bind2)", $alltuples);
+    executeBoundSQL("insert into User_ values (:bind1, :bind2, :bind3, :bind4)", $alltuples);
     OCICommit($db_conn);
 }
 
