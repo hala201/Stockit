@@ -22,8 +22,8 @@
 </head>
 
 <body>
-<h2>Reset</h2>
-<p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
+<h2>Stocks App Reset</h2>
+<p>If you wish to reset your stocks app table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
 
 <form method="POST" action="stocks.php">
     <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
@@ -33,11 +33,13 @@
 
 <hr />
 
-<h2>Insert Values into DemoTable</h2>
+<h2>Sign up! Insert Values into User_ table</h2>
 <form method="POST" action="stocks.php"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-    Number: <input type="text" name="insNo"> <br /><br />
+    SIN Number: <input type="text" name="sin"> <br /><br />
     Name: <input type="text" name="insName"> <br /><br />
+    Date of Birth: <input type="text" name="dob"> <br /><br />
+    EmailID: <input type="text" name="email"> <br /><br />
 
     <input type="submit" value="Insert" name="insertSubmit"></p>
 </form>
@@ -202,15 +204,17 @@ function handleInsertRequest() {
 
     //Getting the values from user and insert data into the table
     $tuple = array (
-        ":bind1" => $_POST['insNo'],
-        ":bind2" => $_POST['insName']
+        ":bind1" => $_POST['sin'],
+        ":bind2" => $_POST['insName'],
+        ":bind3" => $_POST['dob'],
+        ":bind4" => $_POST['email']
     );
 
     $alltuples = array (
         $tuple
     );
 
-    executeBoundSQL("insert into demoTable values (:bind1, :bind2)", $alltuples);
+    executeBoundSQL("insert into User_ values (:bind1, :bind2, :bind3, :bind4)", $alltuples);
     OCICommit($db_conn);
 }
 
