@@ -50,17 +50,33 @@
 
 <form method="POST" action="main.php"> <!--refresh page when submitted-->
     <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-    Old Name: <input type="text" name="oldName"> <br /><br />
-    New Name: <input type="text" name="newName"> <br /><br />
+    SIN: <input type="text" name="currentSIN"> <br /><br />
     Old Email: <input type="text" name="newEmail"> <br /><br />
     New Email: <input type="text" name="newEmail"> <br /><br />
+    Old Name: <input type="text" name="oldName"> <br /><br />
+    New Name: <input type="text" name="newName"> <br /><br />
+
 
     <input type="submit" value="Update" name="updateSubmit"></p>
 </form>
 
 <hr />
 
-<h2>Count the Tuples in DemoTable</h2>
+<h2>Unsubscribe From the Investment Application</h2>
+<p>If you are a current user, you can delete your subscription</p>
+
+<form method="POST" action="main.php"> <!--refresh page when submitted-->
+    <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
+    Old Name: <input type="text" name="oldName"> <br /><br />
+    New Name: <input type="text" name="newName"> <br /><br />
+    Old Email: <input type="text" name="newEmail"> <br /><br />
+    New Email: <input type="text" name="newEmail"> <br /><br />
+
+    <input type="submit" value="Delete" name="deleteSubmit"></p>
+</form>
+
+<hr />
+<h2>Number of Current Users</h2>
 <form method="GET" action="main.php"> <!--refresh page when submitted-->
     <input type="hidden" id="countTupleRequest" name="countTupleRequest">
     <input type="submit" name="countTuples"></p>
@@ -185,20 +201,36 @@ function handleUpdateRequest() {
     $new_name = $_POST['newName'];
     $old_email = $_POST['oldEmail'];
     $new_email = $_POST['newEmail'];
+    $curr_sin = $_POST['currentSIN'];
     // you need the wrap the old name and new name values with single quotations
     executePlainSQL("UPDATE User_ SET Name_='" . $new_name . "' WHERE Name_='" . $old_name . "'");
-    executePlainSQL("UPDATE User_ SET Email='" . $new_email . "' WHERE EmailID='" . $old_email . "'");
+   // executePlainSQL("UPDATE User_ SET Email='" . $new_email . "' WHERE EmailID='" . $old_email . "'");
+    executePlainSQL("UPDATE User_ SET Email ='" . $new_email ."' WHERE SIN_ ='" . $curr_sin ."' AND EmailID='" . $old_email ."'");
     OCICommit($db_conn);
 }
 
+function handleDeleteRequest() {
+    global $db_conn;
+
+    $email = $_POST['Email'];
+    $sin = $_POST['SIN'];
+    // you need the wrap the old name and new name values with single quotations
+    executePlainSQL("DELETE FROM User_ WHERE EmailID='" . $email . "' AND SIN_='" . $sin . "'");
+    OCICommit($db_conn);
+}
 function handleResetRequest() {
     global $db_conn;
     // Drop old table
-    executePlainSQL("DROP TABLE demoTable");
+    executePlainSQL("DROP TABLE User_");
 
     // Create new table
     echo "<br> creating new table <br>";
-    executePlainSQL("CREATE TABLE demoTable (id int PRIMARY KEY, name char(30))");
+    executePlainSQL("CREATE TABLE User_(
+        SIN_ INT,
+        Name_ CHAR(50),
+        DOB CHAR(13),
+        EmailID CHAR(50),
+        PRIMARY KEY(EmailID, SIN_))");
     OCICommit($db_conn);
 }
 
@@ -259,7 +291,7 @@ function handleGETRequest() {
     }
 }
 
-if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
+if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['deleteSubmit'])) {
     handlePOSTRequest();
 } else if (isset($_GET['countTupleRequest'])) {
     handleGETRequest();
