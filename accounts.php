@@ -257,6 +257,11 @@ if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['ins
 } else if (isset($_GET['countTupleRequest'])) {
     handleGETRequest();
 }
+
+echo "just checking";
+
 ?>
+
+
 </body>
 </html>
