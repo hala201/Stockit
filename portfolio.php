@@ -65,7 +65,7 @@
     <input type="submit" name="countTuples"></p>
 </form>
 
-<h2>Check Portfolio Networth</h2>
+<h2>Check Portfolio Net Worth</h2>
 <form method="GET" action="portfolio.php"> <!--refresh page when submitted-->
     <input type="hidden" id="networthRequest" name="networthRequest">
     <input type="submit" name="networth"></p>
@@ -186,11 +186,11 @@ function disconnectFromDB() {
 function handleUpdateRequest() {
     global $db_conn;
 
-    $old_name = $_POST['oldName'];
-    $new_name = $_POST['newName'];
+    $old_networth = $_POST['oldNetworth'];
+    $new_networth = $_POST['newNetworth'];
 
     // you need the wrap the old name and new name values with single quotations
-    executePlainSQL("UPDATE Portfolio SET name='" . $new_name . "' WHERE name='" . $old_name . "'");
+    executePlainSQL("UPDATE Portfolio SET NetWorth='" . $new_networth . "' WHERE NetWorth='" . $old_networth . "'");
     OCICommit($db_conn);
 }
 
@@ -204,8 +204,7 @@ function handleResetRequest() {
     executePlainSQL("CREATE TABLE Portfolio(ID INT PRIMARY KEY, 
                                             NetWorth INT, 
                                             EmailID CHAR(50), 
-                                            SIN_ INT,
-                                            UNIQUE (EmailID));");
+                                            SIN_ INT)");
     OCICommit($db_conn);
 }
 
@@ -214,15 +213,17 @@ function handleInsertRequest() {
 
     //Getting the values from user and insert data into the table
     $tuple = array (
-        ":bind1" => $_POST['insNo'],
-        ":bind2" => $_POST['insName']
+        ":bind1" => $_POST['id'],
+        ":bind2" => $_POST['networth'],
+        ":bind3" => $_POST['email'],
+        ":bind4" => $_POST['sin']
     );
 
     $alltuples = array (
         $tuple
     );
 
-    executeBoundSQL("insert into Portfolio values (:bind1, :bind2)", $alltuples);
+    executeBoundSQL("INSERT INTO Portfolio VALUES (:bind1, :bind2, :bind3, :bind4)", $alltuples);
     OCICommit($db_conn);
 }
 
