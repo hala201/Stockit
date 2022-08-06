@@ -18,7 +18,7 @@
 
 <html>
 <head>
-    <title>CPSC 304 PHP/Oracle Demonstration</title>
+    <title>Investment Portfolio</title>
 </head>
 
 <body>

@@ -45,7 +45,7 @@
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
     SIN          : <input type="text" name="sin"> <br /><br />
     Name         : <input type="text" name="Name"> <br /><br />
-    Date of Birth: <input type="text" name="dob"> <br /><br />
+    Date of Birth: <input type="date" name="dob"> <br /><br />
     EmailID      : <input type="text" name="email"> <br /><br />
 
     <input type="submit" value="Insert" name="insertSubmit"></p>
