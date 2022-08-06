@@ -34,7 +34,7 @@
 
 <hr />
 
-<div class="muButton">
+<div class="muButton" style="text-align: center;">
     <a href="./portfolio.php">
         <button class="portfolioButton">
             <b class="thetext">go to your portfolio</b>
@@ -42,8 +42,8 @@
     </a>
 </div>
 
-<h2>Sign up</h2>
-<form method="POST" action="main.php"> <!--refresh page when submitted-->
+<h2 style="text-align: center;">Sign up</h2>
+<form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
     SIN          : <input type="text" name="sin"> <br /><br />
     Name         : <input type="text" name="Name"> <br /><br />
@@ -87,12 +87,12 @@
 <h2 style="text-align: center;">Unsubscribe From the Investment Application</h2>
 <p style="text-align: center;">If you are a current user, you can delete your subscription</p>
 
-<form method="POST" action="main.php"> <!--refresh page when submitted-->
+<form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="deleteQueryRequest" name="deleteQueryRequest">
-    Old Name: <input type="text" name="oldName"> <br /><br />
-    New Name: <input type="text" name="newName"> <br /><br />
-    Old Email: <input type="text" name="newEmail"> <br /><br />
-    New Email: <input type="text" name="newEmail"> <br /><br />
+    Old Name: <input type="text" name="oldName" placeholder ="Old Name"> <br /><br />
+    New Name: <input type="text" name="newName" placeholder = "New Name"> <br /><br />
+    Old Email: <input type="text" name="newEmail" placeholder ="Old Email"> <br /><br />
+    New Email: <input type="text" name="newEmail" placeholder = "New Email"> <br /><br />
 
     <input type="submit" value="Delete" name="deleteSubmit"></p>
 </form>
