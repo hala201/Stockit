@@ -32,6 +32,14 @@
 
 <hr />
 
+<div class="muButton">
+    <a href="./portfolio.php">
+        <button class="portfolioButton">
+            <b class="thetext">go to your portfolio</b>
+        </button>
+    </a>
+</div>
+
 <h2>Sign up</h2>
 <form method="POST" action="main.php"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
@@ -66,7 +74,7 @@
 <p>If you are a current user, you can delete your subscription</p>
 
 <form method="POST" action="main.php"> <!--refresh page when submitted-->
-    <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
+    <input type="hidden" id="deleteQueryRequest" name="deleteQueryRequest">
     Old Name: <input type="text" name="oldName"> <br /><br />
     New Name: <input type="text" name="newName"> <br /><br />
     Old Email: <input type="text" name="newEmail"> <br /><br />
@@ -81,6 +89,8 @@
     <input type="hidden" id="countTupleRequest" name="countTupleRequest">
     <input type="submit" name="countTuples"></p>
 </form>
+
+
 
 <?php
 //this tells the system that it's no longer just parsing html; it's now parsing PHP
@@ -273,8 +283,9 @@ function handlePOSTRequest() {
             handleUpdateRequest();
         } else if (array_key_exists('insertQueryRequest', $_POST)) {
             handleInsertRequest();
-        }
-
+        } else if (array_key_exists('deleteQueryRequest', $_POST)) {
+            handleDeleteRequest();
+        } 
         disconnectFromDB();
     }
 }
