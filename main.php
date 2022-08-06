@@ -34,13 +34,21 @@
 
 <hr />
 
-<h2 style="text-align: center;">Sign up</h2>
-<form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
+<div class="muButton">
+    <a href="./portfolio.php">
+        <button class="portfolioButton">
+            <b class="thetext">go to your portfolio</b>
+        </button>
+    </a>
+</div>
+
+<h2>Sign up</h2>
+<form method="POST" action="main.php"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-    SIN          : <input type="text" name="sin" placeholder ="SIN" > <br /><br />
-    Name         : <input type="text" name="Name" placeholder ="Name"> <br /><br />
-    Date of Birth: <input type="text" name="dob" placeholder ="Date of Birth"> <br /><br />
-    EmailID      : <input type="text" name="email" placeholder="Email"> <br /><br />
+    SIN          : <input type="text" name="sin"> <br /><br />
+    Name         : <input type="text" name="Name"> <br /><br />
+    Date of Birth: <input type="date" name="dob"> <br /><br />
+    EmailID      : <input type="text" name="email"> <br /><br />
 
     <input type="submit" value="Insert" name="insertSubmit"></p>
 </form>
@@ -74,17 +82,17 @@
     <input type="submit" value="Update" name="updateSubmit"></p>
 </form>
 
-<hr />
+<hr/>
 
 <h2 style="text-align: center;">Unsubscribe From the Investment Application</h2>
 <p style="text-align: center;">If you are a current user, you can delete your subscription</p>
 
-<form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
-    <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-    Old Name: <input type="text" name="oldName" placeholder="Old Name"> <br /><br />
-    New Name: <input type="text" name="newName" placeholder ="New Name"> <br /><br />
-    Old Email: <input type="text" name="newEmail" placeholder ="New Email"> <br /><br />
-    New Email: <input type="text" name="newEmail" placeholder ="New Email"> <br /><br />
+<form method="POST" action="main.php"> <!--refresh page when submitted-->
+    <input type="hidden" id="deleteQueryRequest" name="deleteQueryRequest">
+    Old Name: <input type="text" name="oldName"> <br /><br />
+    New Name: <input type="text" name="newName"> <br /><br />
+    Old Email: <input type="text" name="newEmail"> <br /><br />
+    New Email: <input type="text" name="newEmail"> <br /><br />
 
     <input type="submit" value="Delete" name="deleteSubmit"></p>
 </form>
@@ -95,6 +103,8 @@
     <input type="hidden" id="countTupleRequest" name="countTupleRequest">
     <input type="submit" name="countTuples"></p>
 </form>
+
+
 
 <?php
 //this tells the system that it's no longer just parsing html; it's now parsing PHP
@@ -290,8 +300,9 @@ function handlePOSTRequest() {
             handleUpdateRequest();
         } else if (array_key_exists('insertQueryRequest', $_POST)) {
             handleInsertRequest();
-        }
-
+        } else if (array_key_exists('deleteQueryRequest', $_POST)) {
+            handleDeleteRequest();
+        } 
         disconnectFromDB();
     }
 }
