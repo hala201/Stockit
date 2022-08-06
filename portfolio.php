@@ -7,7 +7,7 @@
   Specifically, it will drop a table, create a table, insert values
   update values, and then query for values
 
-  IF YOU HAVE A TABLE CALLED "demoTable" IT WILL BE DESTROYED
+  IF YOU HAVE A TABLE CALLED "Portfolio" IT WILL BE DESTROYED
 
   The script assumes you already have a server set up
   All OCI commands are commands to the Oracle libraries
@@ -33,34 +33,42 @@
 
 <hr />
 
-<h2>Insert Values into DemoTable</h2>
+<h2>Insert Values into Portfolio</h2>
 <form method="POST" action="portfolio.php"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-    Number: <input type="text" name="insNo"> <br /><br />
-    Name: <input type="text" name="insName"> <br /><br />
+    ID: <input type="text" name="id"> <br /><br />
+    Net Worth: <input type="text" name="networth"> <br /><br />
+    Email ID: <input type="text" name="email"> <br /><br />
+    SIN: <input type="text" name="sin"> <br /><br />
 
     <input type="submit" value="Insert" name="insertSubmit"></p>
 </form>
 
 <hr />
 
-<h2>Update Name in DemoTable</h2>
+<h2>Update Name in Portfolio</h2>
 <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
 <form method="POST" action="portfolio.php"> <!--refresh page when submitted-->
     <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-    Old Name: <input type="text" name="oldName"> <br /><br />
-    New Name: <input type="text" name="newName"> <br /><br />
+    Old Net Worth: <input type="text" name="oldNetworth"> <br /><br />
+    New Net Worth: <input type="text" name="newNetworth"> <br /><br />
 
     <input type="submit" value="Update" name="updateSubmit"></p>
 </form>
 
 <hr />
 
-<h2>Count the Tuples in DemoTable</h2>
+<h2>Count the Tuples in Portfolio</h2>
 <form method="GET" action="portfolio.php"> <!--refresh page when submitted-->
     <input type="hidden" id="countTupleRequest" name="countTupleRequest">
     <input type="submit" name="countTuples"></p>
+</form>
+
+<h2>Check Portfolio Networth</h2>
+<form method="GET" action="portfolio.php"> <!--refresh page when submitted-->
+    <input type="hidden" id="networthRequest" name="networthRequest">
+    <input type="submit" name="networth"></p>
 </form>
 
 <?php
@@ -138,17 +146,17 @@ See the sample code below for how this function is used */
     }
 }
 
-function printResult($result) { //prints results from a select statement
-    echo "<br>Retrieved data from table demoTable:<br>";
-    echo "<table>";
-    echo "<tr><th>ID</th><th>Name</th></tr>";
+// function printResult($result) { //prints results from a select statement
+//     echo "<br>Retrieved data from table Portfolio:<br>";
+//     echo "<table>";
+//     echo "<tr><th>ID</th><th>Name</th></tr>";
 
-    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]"
-    }
+//     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+//         echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]"
+//     }
 
-    echo "</table>";
-}
+//     echo "</table>";
+// }
 
 function connectToDB() {
     global $db_conn;
@@ -182,18 +190,22 @@ function handleUpdateRequest() {
     $new_name = $_POST['newName'];
 
     // you need the wrap the old name and new name values with single quotations
-    executePlainSQL("UPDATE demoTable SET name='" . $new_name . "' WHERE name='" . $old_name . "'");
+    executePlainSQL("UPDATE Portfolio SET name='" . $new_name . "' WHERE name='" . $old_name . "'");
     OCICommit($db_conn);
 }
 
 function handleResetRequest() {
     global $db_conn;
     // Drop old table
-    executePlainSQL("DROP TABLE demoTable");
+    executePlainSQL("DROP TABLE Portfolio");
 
     // Create new table
     echo "<br> creating new table <br>";
-    executePlainSQL("CREATE TABLE demoTable (id int PRIMARY KEY, name char(30))");
+    executePlainSQL("CREATE TABLE Portfolio(ID INT PRIMARY KEY, 
+                                            NetWorth INT, 
+                                            EmailID CHAR(50), 
+                                            SIN_ INT,
+                                            UNIQUE (EmailID));");
     OCICommit($db_conn);
 }
 
@@ -210,17 +222,17 @@ function handleInsertRequest() {
         $tuple
     );
 
-    executeBoundSQL("insert into demoTable values (:bind1, :bind2)", $alltuples);
+    executeBoundSQL("insert into Portfolio values (:bind1, :bind2)", $alltuples);
     OCICommit($db_conn);
 }
 
 function handleCountRequest() {
     global $db_conn;
 
-    $result = executePlainSQL("SELECT Count(*) FROM demoTable");
+    $result = executePlainSQL("SELECT Count(*) FROM Portfolio");
 
     if (($row = oci_fetch_row($result)) != false) {
-        echo "<br> The number of tuples in demoTable: " . $row[0] . "<br>";
+        echo "<br> The number of tuples in Portfolio: " . $row[0] . "<br>";
     }
 }
 
