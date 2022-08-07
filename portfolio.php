@@ -33,11 +33,14 @@
 
 <hr />
 
-<h2>Insert Values into DemoTable</h2>
+<h2>Issue an investmentment</h2>
 <form method="POST" action="portfolio.php"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-    Number: <input type="text" name="insNo"> <br /><br />
-    Name: <input type="text" name="insName"> <br /><br />
+    Email: <input type="email" name="ID"> <br /><br />
+    SIN: <input type="text">
+    choose ID: <input type="text" name="ID"> <br /><br />
+    Net Worth: <input type="text" name="NetWorth"> <br /><br />
+    
 
     <input type="submit" value="Insert" name="insertSubmit"></p>
 </form>

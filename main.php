@@ -43,10 +43,10 @@
 <h2>Sign up</h2>
 <form method="POST" action="main.php"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-    SIN          : <input type="text" name="sin"> <br /><br />
-    Name         : <input type="text" name="Name"> <br /><br />
-    Date of Birth: <input type="date" name="dob"> <br /><br />
-    EmailID      : <input type="text" name="email"> <br /><br />
+    SIN: <input type="text" name="sin"> <br /><br />
+    Name: <input type="text" name="Name"> <br /><br />
+    Email: <input type="email" name="email"> <br /><br />
+    age: <input type="date" name="dob"> <br /><br />
 
     <input type="submit" value="Insert" name="insertSubmit"></p>
 </form>
