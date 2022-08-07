@@ -7,7 +7,7 @@
   Specifically, it will drop a table, create a table, insert values
   update values, and then query for values
 
-  IF YOU HAVE A TABLE CALLED "demoTable" IT WILL BE DESTROYED
+  IF YOU HAVE A TABLE CALLED "Portfolio" IT WILL BE DESTROYED
 
   The script assumes you already have a server set up
   All OCI commands are commands to the Oracle libraries
@@ -22,10 +22,10 @@
 </head>
 
 <body>
-<h2>Reset</h2>
-<p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
+<h2 style="text-align: center;">Reset</h2>
+<p style="text-align: center;">If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
 
-<form method="POST" action="portfolio.php">
+<form method="POST" action="portfolio.php" style="text-align: center;">
     <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
     <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
     <p><input type="submit" value="Reset" name="reset"></p>
@@ -33,37 +33,42 @@
 
 <hr />
 
-<h2>Issue an investmentment</h2>
-<form method="POST" action="portfolio.php"> <!--refresh page when submitted-->
+<h2 style="text-align: center;">Insert Values into Portfolio</h2>
+<form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-    Email: <input type="email" name="ID"> <br /><br />
-    SIN: <input type="text">
-    choose ID: <input type="text" name="ID"> <br /><br />
-    Net Worth: <input type="text" name="NetWorth"> <br /><br />
-    
+    ID: <input type="text" name="id" placeholder ="ID"> <br /><br />
+    Net Worth: <input type="text" name="networth" placeholder ="Net Worth"> <br /><br />
+    Email ID: <input type="text" name="email" placeholder ="Email ID"> <br /><br />
+    SIN: <input type="text" name="sin" placeholder ="SIN"> <br /><br />
 
     <input type="submit" value="Insert" name="insertSubmit"></p>
 </form>
 
 <hr />
 
-<h2>Update Name in DemoTable</h2>
-<p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
+<h2 style="text-align: center;">Update Name in Portfolio</h2>
+<p style="text-align: center;">The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
-<form method="POST" action="portfolio.php"> <!--refresh page when submitted-->
+<form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-    Old Name: <input type="text" name="oldName"> <br /><br />
-    New Name: <input type="text" name="newName"> <br /><br />
+    Old Net Worth: <input type="text" name="oldNetworth" placeholder ="Old Net Worth"> <br /><br />
+    New Net Worth: <input type="text" name="newNetworth" placeholder ="New Net Worth"> <br /><br />
 
     <input type="submit" value="Update" name="updateSubmit"></p>
 </form>
 
 <hr />
 
-<h2>Count the Tuples in DemoTable</h2>
-<form method="GET" action="portfolio.php"> <!--refresh page when submitted-->
+<h2 style="text-align: center;">Count the Tuples in Portfolio</h2>
+<form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="countTupleRequest" name="countTupleRequest">
     <input type="submit" name="countTuples"></p>
+</form>
+
+<h2 style="text-align: center;">Check Portfolio Net Worth</h2>
+<form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
+    <input type="hidden" id="networthRequest" name="networthRequest">
+    <input type="submit" name="networth"></p>
 </form>
 
 <?php
@@ -141,17 +146,17 @@ See the sample code below for how this function is used */
     }
 }
 
-function printResult($result) { //prints results from a select statement
-    echo "<br>Retrieved data from table demoTable:<br>";
-    echo "<table>";
-    echo "<tr><th>ID</th><th>Name</th></tr>";
+// function printResult($result) { //prints results from a select statement
+//     echo "<br>Retrieved data from table Portfolio:<br>";
+//     echo "<table>";
+//     echo "<tr><th>ID</th><th>Name</th></tr>";
 
-    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]"
-    }
+//     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+//         echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]"
+//     }
 
-    echo "</table>";
-}
+//     echo "</table>";
+// }
 
 function connectToDB() {
     global $db_conn;
@@ -181,22 +186,25 @@ function disconnectFromDB() {
 function handleUpdateRequest() {
     global $db_conn;
 
-    $old_name = $_POST['oldName'];
-    $new_name = $_POST['newName'];
+    $old_networth = $_POST['oldNetworth'];
+    $new_networth = $_POST['newNetworth'];
 
     // you need the wrap the old name and new name values with single quotations
-    executePlainSQL("UPDATE demoTable SET name='" . $new_name . "' WHERE name='" . $old_name . "'");
+    executePlainSQL("UPDATE Portfolio SET NetWorth='" . $new_networth . "' WHERE NetWorth='" . $old_networth . "'");
     OCICommit($db_conn);
 }
 
 function handleResetRequest() {
     global $db_conn;
     // Drop old table
-    executePlainSQL("DROP TABLE demoTable");
+    executePlainSQL("DROP TABLE Portfolio");
 
     // Create new table
     echo "<br> creating new table <br>";
-    executePlainSQL("CREATE TABLE demoTable (id int PRIMARY KEY, name char(30))");
+    executePlainSQL("CREATE TABLE Portfolio(ID INT PRIMARY KEY, 
+                                            NetWorth INT, 
+                                            EmailID CHAR(50), 
+                                            SIN_ INT)");
     OCICommit($db_conn);
 }
 
@@ -205,25 +213,27 @@ function handleInsertRequest() {
 
     //Getting the values from user and insert data into the table
     $tuple = array (
-        ":bind1" => $_POST['insNo'],
-        ":bind2" => $_POST['insName']
+        ":bind1" => $_POST['id'],
+        ":bind2" => $_POST['networth'],
+        ":bind3" => $_POST['email'],
+        ":bind4" => $_POST['sin']
     );
 
     $alltuples = array (
         $tuple
     );
 
-    executeBoundSQL("insert into demoTable values (:bind1, :bind2)", $alltuples);
+    executeBoundSQL("INSERT INTO Portfolio VALUES (:bind1, :bind2, :bind3, :bind4)", $alltuples);
     OCICommit($db_conn);
 }
 
 function handleCountRequest() {
     global $db_conn;
 
-    $result = executePlainSQL("SELECT Count(*) FROM demoTable");
+    $result = executePlainSQL("SELECT Count(*) FROM Portfolio");
 
     if (($row = oci_fetch_row($result)) != false) {
-        echo "<br> The number of tuples in demoTable: " . $row[0] . "<br>";
+        echo "<br> The number of tuples in Portfolio: " . $row[0] . "<br>";
     }
 }
 

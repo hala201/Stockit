@@ -19,12 +19,14 @@
 <html>
 <head>
     <title>Investment Application</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 </head>
 
 <body>
-<h2>Start Session</h2>
+<h2 style="text-align: center;">Start Session</h2>
 
-<form method="POST" action="main.php">
+<form method="POST" action="main.php" style="text-align: center;">
     <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
     <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
     <p><input type="submit" value="Reset" name="reset"></p>
@@ -32,7 +34,7 @@
 
 <hr />
 
-<div class="muButton">
+<div class="muButton" style="text-align: center;">
     <a href="./portfolio.php">
         <button class="portfolioButton">
             <b class="thetext">go to your portfolio</b>
@@ -40,8 +42,8 @@
     </a>
 </div>
 
-<h2>Sign up</h2>
-<form method="POST" action="main.php"> <!--refresh page when submitted-->
+<h2 style="text-align: center;">Sign up</h2>
+<form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
     SIN: <input type="text" name="sin"> <br /><br />
     Name: <input type="text" name="Name"> <br /><br />
@@ -53,39 +55,51 @@
 
 <hr />
 
-<h2>Edit your user information</h2>
-<p>If you are a current user, you can update your email or name below. The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
+<h2 style="text-align: center;">Edit your user information</h2>
+<p style="text-align: center;">If you are a current user, you can update your email or name below. The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
-<form method="POST" action="main.php"> <!--refresh page when submitted-->
+
+<style>
+   body{
+
+    background:url('<?php $a = array('milestone1.jpg', 'img2.jpg', 'img3.jpg'); echo $a[array_rand($a)];?>');
+   }
+    
+
+    </style>
+
+
+
+<form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-    SIN: <input type="text" name="currentSIN"> <br /><br />
-    Old Email: <input type="text" name="newEmail"> <br /><br />
-    New Email: <input type="text" name="newEmail"> <br /><br />
-    Old Name: <input type="text" name="oldName"> <br /><br />
-    New Name: <input type="text" name="newName"> <br /><br />
+    SIN: <input type="text" name="currentSIN" placeholder="SIN"> <br /><br />
+    Old Email: <input type="text" name="newEmail" placeholder ="Old Email"> <br /><br />
+    New Email: <input type="text" name="newEmail" placeholder ="New Email"> <br /><br />
+    Old Name: <input type="text" name="oldName" placeholder ="Old Name"> <br /><br />
+    New Name: <input type="text" name="newName" placeholder ="New Name"> <br /><br />
 
 
     <input type="submit" value="Update" name="updateSubmit"></p>
 </form>
 
-<hr />
+<hr/>
 
-<h2>Unsubscribe From the Investment Application</h2>
-<p>If you are a current user, you can delete your subscription</p>
+<h2 style="text-align: center;">Unsubscribe From the Investment Application</h2>
+<p style="text-align: center;">If you are a current user, you can delete your subscription</p>
 
-<form method="POST" action="main.php"> <!--refresh page when submitted-->
+<form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="deleteQueryRequest" name="deleteQueryRequest">
-    Old Name: <input type="text" name="oldName"> <br /><br />
-    New Name: <input type="text" name="newName"> <br /><br />
-    Old Email: <input type="text" name="newEmail"> <br /><br />
-    New Email: <input type="text" name="newEmail"> <br /><br />
+    Old Name: <input type="text" name="oldName" placeholder ="Old Name"> <br /><br />
+    New Name: <input type="text" name="newName" placeholder = "New Name"> <br /><br />
+    Old Email: <input type="text" name="newEmail" placeholder ="Old Email"> <br /><br />
+    New Email: <input type="text" name="newEmail" placeholder = "New Email"> <br /><br />
 
     <input type="submit" value="Delete" name="deleteSubmit"></p>
 </form>
 
 <hr />
-<h2>Number of Current Users</h2>
-<form method="GET" action="main.php"> <!--refresh page when submitted-->
+<h2 style="text-align: center;">Number of Current Users</h2>
+<form method="GET" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="countTupleRequest" name="countTupleRequest">
     <input type="submit" name="countTuples"></p>
 </form>
@@ -98,7 +112,7 @@
 $success = True; //keep track of errors so it redirects the page only if there are no errors
 $db_conn = NULL; // edit the login credentials in connectToDB()
 $show_debug_alert_messages = False; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
-
+$profpic = "milestone1.jpg";
 function debugAlertMessage($message) {
     global $show_debug_alert_messages;
 
@@ -197,6 +211,9 @@ function connectToDB() {
     }
 }
 
+
+
+
 function disconnectFromDB() {
     global $db_conn;
 
@@ -235,12 +252,11 @@ function handleResetRequest() {
 
     // Create new table
     echo "<br> creating new table <br>";
-    executePlainSQL("CREATE TABLE User_(
-        SIN_ INT,
-        Name_ CHAR(50),
-        DOB CHAR(13),
-        EmailID CHAR(50),
-        PRIMARY KEY(EmailID, SIN_))");
+    executePlainSQL("CREATE TABLE User_(SIN_ INT,
+                                        Name_ CHAR(50),
+                                        DOB CHAR(13),
+                                        EmailID CHAR(50),
+                                        PRIMARY KEY(EmailID))");
     OCICommit($db_conn);
 }
 
@@ -308,5 +324,9 @@ if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['ins
     handleGETRequest();
 }
 ?>
+
+
+
+
 </body>
 </html>

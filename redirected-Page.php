@@ -16,14 +16,14 @@
   extension.  You must also change the username and password on the
   OCILogon below to be your ORACLE username and password -->
 
-<html>
+  <html>
 <head>
-    <title>CPSC 304 PHP/Oracle Demonstration</title>
+    <title>Redirected Page after choosing a User</title>
 </head>
 
 <body>
-<h2>Stocks App Reset</h2>
-<p>If you wish to reset your stocks app table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
+<h2>Hi User!</h2>
+
 
 <form method="POST" action="stocks.php">
     <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
