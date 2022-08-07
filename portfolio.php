@@ -276,7 +276,7 @@ function handleSelectRequest(){
 
     $result = executePlainSQL("SELECT * 
                             FROM RealEstate
-                            WHERE BuyPrice >=" . $min_price . " AND BuyPrice =< " . $max_price . );
+                            WHERE BuyPrice >='" . $min_price . "' AND BuyPrice =<' " . $max_price . "'");
     if(($row = oci_fetch_row($result)) != false) {
         echo "<br> The following rows match your search: " . $row[0] . "<br>";
     }
