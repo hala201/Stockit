@@ -260,6 +260,15 @@ function handleResetRequest() {
     //                                     DOB DATE,
     //                                     EmailID CHAR(50),
     //                                     PRIMARY KEY(EmailID))");
+    $sql = file_get_contents('stocks.sql');
+    $block= <<<_SQL
+    BEGIN
+    $sql
+    END;
+    _SQL;
+  
+    $stmt = oci_parse($conn, $block);
+    oci_execute($stmt);
     OCICommit($db_conn);
 }
 
@@ -270,7 +279,7 @@ function handleInsertRequest() {
     $tuple = array (
         ":bind1" => $_POST['sin'],
         ":bind2" => $_POST['insName'],
-        ":bind3" => $_POST['dob'],
+        ":bind3" => $_POST[date('dob')],
         ":bind4" => $_POST['email']
     );
 

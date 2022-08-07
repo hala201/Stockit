@@ -220,7 +220,7 @@ function handleInsertRequest() {
         $tuple
     );
 
-    executeBoundSQL("INSERT INTO Portfolio VALUES (:bind1, :bind2, :bind3, :bind4)", $alltuples);
+    executeBoundSQL("INSERT INTO Portfolio VALUES (:bind1, :bind2, :bind3)", $alltuples);
     OCICommit($db_conn);
 }
 
