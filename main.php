@@ -33,7 +33,7 @@
 </form>
 
 <hr />
-<!--
+
 <div class="muButton" style="text-align: center;">
     <a href="./portfolio.php">
         <button class="portfolioButton">
@@ -41,7 +41,7 @@
         </button>
     </a>
 </div>
--->
+
 
 <h2 style="text-align: center;">Sign up</h2>
 <form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
@@ -294,7 +294,7 @@ function handleInsertRequest() {
 function handleCountRequest() {
     global $db_conn;
 
-    $result = executePlainSQL("SELECT Count(*) FROM demoTable");
+    $result = executePlainSQL("SELECT Count(*) FROM User_");
 
     if (($row = oci_fetch_row($result)) != false) {
         echo "<br> The number of tuples in demoTable: " . $row[0] . "<br>";
