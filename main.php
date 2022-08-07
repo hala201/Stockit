@@ -235,12 +235,11 @@ function handleResetRequest() {
 
     // Create new table
     echo "<br> creating new table <br>";
-    executePlainSQL("CREATE TABLE User_(
-        SIN_ INT,
-        Name_ CHAR(50),
-        DOB CHAR(13),
-        EmailID CHAR(50),
-        PRIMARY KEY(EmailID, SIN_))");
+    executePlainSQL("CREATE TABLE User_(SIN_ INT,
+                                        Name_ CHAR(50),
+                                        DOB CHAR(13),
+                                        EmailID CHAR(50),
+                                        PRIMARY KEY(EmailID))");
     OCICommit($db_conn);
 }
 
