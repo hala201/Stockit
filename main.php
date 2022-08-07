@@ -297,7 +297,7 @@ function handleCountRequest() {
     $result = executePlainSQL("SELECT Count(*) FROM User_");
 
     if (($row = oci_fetch_row($result)) != false) {
-        echo "<br> The number of tuples in demoTable: " . $row[0] . "<br>";
+        echo "<br> The number of users: " . $row[0] . "<br>";
     }
 }
 

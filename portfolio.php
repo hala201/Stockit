@@ -55,21 +55,6 @@
 
     <input type="submit" value="Update" name="updateSubmit"></p>
 </form>
-
-<hr />
-
-<h2 style="text-align: center;">Count the Tuples in Portfolio</h2>
-<form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
-    <input type="hidden" id="countTupleRequest" name="countTupleRequest">
-    <input type="submit" name="countTuples"></p>
-</form>
-
-<h2 style="text-align: center;">Check Portfolio Net Worth</h2>
-<form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
-    <input type="hidden" id="networthRequest" name="networthRequest">
-    <input type="submit" name="networth"></p>
-</form>
-
 <!-- 
     SELECTION
 Create one query of this category and provide an interface
@@ -92,6 +77,16 @@ WHERE Field1 = :Var1 AND Field2 > :Var20 = Incorrect or missing
 
     <input type="submit" value="select" name="selectSubmit"></p>
 </form>
+
+<hr />
+
+<h2 style="text-align: center;">Count the Tuples in Portfolio</h2>
+<form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
+    <input type="hidden" id="countTupleRequest" name="countTupleRequest">
+    <input type="submit" name="countTuples"></p>
+</form>
+
+
 
 
 
@@ -170,17 +165,17 @@ See the sample code below for how this function is used */
     }
 }
 
-// function printResult($result) { //prints results from a select statement
-//     echo "<br>Retrieved data from table Portfolio:<br>";
-//     echo "<table>";
-//     echo "<tr><th>ID</th><th>Name</th></tr>";
+function printResult($result) { //prints results from a select statement
+    echo "<br>Retrieved data from table Portfolio:<br>";
+    echo "<table>";
+    echo "<tr><th>ID</th><th>Name</th></tr>";
 
-//     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-//         echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]"
-//     }
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]"
+    }
 
-//     echo "</table>";
-// }
+    echo "</table>";
+}
 
 function connectToDB() {
     global $db_conn;
