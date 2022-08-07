@@ -22,10 +22,10 @@
 </head>
 
 <body>
-<h2>Reset</h2>
-<p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
+<h2 style="text-align: center;">Reset</h2>
+<p style="text-align: center;">If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
 
-<form method="POST" action="portfolio.php">
+<form method="POST" action="portfolio.php" style="text-align: center;">
     <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
     <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
     <p><input type="submit" value="Reset" name="reset"></p>
@@ -33,40 +33,40 @@
 
 <hr />
 
-<h2>Insert Values into Portfolio</h2>
-<form method="POST" action="portfolio.php"> <!--refresh page when submitted-->
+<h2 style="text-align: center;">Insert Values into Portfolio</h2>
+<form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-    ID: <input type="text" name="id"> <br /><br />
-    Net Worth: <input type="text" name="networth"> <br /><br />
-    Email ID: <input type="text" name="email"> <br /><br />
-    SIN: <input type="text" name="sin"> <br /><br />
+    ID: <input type="text" name="id" placeholder ="ID"> <br /><br />
+    Net Worth: <input type="text" name="networth" placeholder ="Net Worth"> <br /><br />
+    Email ID: <input type="text" name="email" placeholder ="Email ID"> <br /><br />
+    SIN: <input type="text" name="sin" placeholder ="SIN"> <br /><br />
 
     <input type="submit" value="Insert" name="insertSubmit"></p>
 </form>
 
 <hr />
 
-<h2>Update Name in Portfolio</h2>
-<p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
+<h2 style="text-align: center;">Update Name in Portfolio</h2>
+<p style="text-align: center;">The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
-<form method="POST" action="portfolio.php"> <!--refresh page when submitted-->
+<form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-    Old Net Worth: <input type="text" name="oldNetworth"> <br /><br />
-    New Net Worth: <input type="text" name="newNetworth"> <br /><br />
+    Old Net Worth: <input type="text" name="oldNetworth" placeholder ="Old Net Worth"> <br /><br />
+    New Net Worth: <input type="text" name="newNetworth" placeholder ="New Net Worth"> <br /><br />
 
     <input type="submit" value="Update" name="updateSubmit"></p>
 </form>
 
 <hr />
 
-<h2>Count the Tuples in Portfolio</h2>
-<form method="GET" action="portfolio.php"> <!--refresh page when submitted-->
+<h2 style="text-align: center;">Count the Tuples in Portfolio</h2>
+<form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="countTupleRequest" name="countTupleRequest">
     <input type="submit" name="countTuples"></p>
 </form>
 
-<h2>Check Portfolio Net Worth</h2>
-<form method="GET" action="portfolio.php"> <!--refresh page when submitted-->
+<h2 style="text-align: center;">Check Portfolio Net Worth</h2>
+<form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="networthRequest" name="networthRequest">
     <input type="submit" name="networth"></p>
 </form>
