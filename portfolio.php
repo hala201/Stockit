@@ -39,7 +39,6 @@
     ID: <input type="text" name="id" placeholder ="ID"> <br /><br />
     Net Worth: <input type="text" name="networth" placeholder ="Net Worth"> <br /><br />
     Email ID: <input type="text" name="email" placeholder ="Email ID"> <br /><br />
-    SIN: <input type="text" name="sin" placeholder ="SIN"> <br /><br />
 
     <input type="submit" value="Insert" name="insertSubmit"></p>
 </form>
@@ -203,8 +202,7 @@ function handleResetRequest() {
     echo "<br> creating new table <br>";
     executePlainSQL("CREATE TABLE Portfolio(ID INT PRIMARY KEY, 
                                             NetWorth INT, 
-                                            EmailID CHAR(50), 
-                                            SIN_ INT)");
+                                            EmailID CHAR(50)");
     OCICommit($db_conn);
 }
 
@@ -215,8 +213,7 @@ function handleInsertRequest() {
     $tuple = array (
         ":bind1" => $_POST['id'],
         ":bind2" => $_POST['networth'],
-        ":bind3" => $_POST['email'],
-        ":bind4" => $_POST['sin']
+        ":bind3" => $_POST['email']
     );
 
     $alltuples = array (

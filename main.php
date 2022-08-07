@@ -33,7 +33,7 @@
 </form>
 
 <hr />
-
+<!--
 <div class="muButton" style="text-align: center;">
     <a href="./portfolio.php">
         <button class="portfolioButton">
@@ -41,6 +41,7 @@
         </button>
     </a>
 </div>
+-->
 
 <h2 style="text-align: center;">Sign up</h2>
 <form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
@@ -248,15 +249,17 @@ function handleDeleteRequest() {
 function handleResetRequest() {
     global $db_conn;
     // Drop old table
-    executePlainSQL("DROP TABLE User_");
+   // executePlainSQL("alter session set ddl_lock_timeout = 600");
+    // executePlainSQL("DROP TABLE User_ CASCADE CONSTRAINTS");
 
-    // Create new table
-    echo "<br> creating new table <br>";
-    executePlainSQL("CREATE TABLE User_(SIN_ INT,
-                                        Name_ CHAR(50),
-                                        DOB CHAR(13),
-                                        EmailID CHAR(50),
-                                        PRIMARY KEY(EmailID))");
+
+    // // Create new table
+    // echo "<br> creating new table <br>";
+    // executePlainSQL("CREATE TABLE User_(SIN_ INT,
+    //                                     Name_ CHAR(50),
+    //                                     DOB DATE,
+    //                                     EmailID CHAR(50),
+    //                                     PRIMARY KEY(EmailID))");
     OCICommit($db_conn);
 }
 
