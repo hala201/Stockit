@@ -80,7 +80,7 @@ WHERE Field1 = :Var1 AND Field2 > :Var20 = Incorrect or missing
 
 <hr />
 
-<h2 style="text-align: center;">Count the Tuples in Portfolio</h2>
+<h2 style="text-align: center;">Find The Most Expensive Residential Property</h2>
 <form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="expensiveHouseRequest" name="expensiveHouseRequest">
     <input type="submit" name="expensiveHouse"></p>
