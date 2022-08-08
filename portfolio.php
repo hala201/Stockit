@@ -45,7 +45,7 @@
 
 <hr />
 
-<h2 style="text-align: center;">Update Name in Portfolio</h2>
+<h2 style="text-align: center;">Update Net Worth in Portfolio</h2>
 <p style="text-align: center;">The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
 <form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
@@ -82,8 +82,8 @@ WHERE Field1 = :Var1 AND Field2 > :Var20 = Incorrect or missing
 
 <h2 style="text-align: center;">Count the Tuples in Portfolio</h2>
 <form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
-    <input type="hidden" id="countTupleRequest" name="countTupleRequest">
-    <input type="submit" name="countTuples"></p>
+    <input type="hidden" id="expensiveHouseRequest" name="expensiveHouseRequest">
+    <input type="submit" name="expensiveHouse"></p>
 </form>
 
 <h2 style="text-align: center;">Check Portfolio Net Worth</h2>
@@ -270,8 +270,8 @@ function handleExpensiveHouseRequest() {
                                 GROUP BY Address_, Type_ 
                                 HAVING Type_='Residential' ");
     
-    while (($row = OCI_Fetch_Array($result))) {
-        echo "<br> The number of tuples in Portfolio: " . $row[0] . "<br>";
+    if(($row = oci_fetch_row($result)) != false) {
+        echo "<br> The following rows match your search: " . $row[0] . "<br>";
     }
 }
 
