@@ -220,19 +220,19 @@ VALUES
 
 INSERT INTO General(AccountNumber, CapitalGainsTax)
 VALUES
-    ('QWER1234567890', 770);
+    ('QWER1234567890', 77);
 INSERT INTO General(AccountNumber, CapitalGainsTax)
 VALUES
-    ('WWER1234567890', 690);
+    ('WWER1234567890', 69);
 INSERT INTO General(AccountNumber, CapitalGainsTax)
 VALUES
-    ('EWER1234567890', 500);
+    ('EWER1234567890', 50);
 INSERT INTO General(AccountNumber, CapitalGainsTax)
 VALUES
-    ('RWER1234567890', 100);
+    ('RWER1234567890', 10);
 INSERT INTO General(AccountNumber, CapitalGainsTax)
 VALUES
-    ('TWER1234567890', 330);
+    ('TWER1234567890', 33);
 
 INSERT INTO RRSP (AccountNumber, ContributionRoom)
 VALUES
