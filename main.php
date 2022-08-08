@@ -24,7 +24,7 @@
 </head>
 
 <body>
-<h2 style="text-align: center;">Start Session</h2>
+<h2 style="text-align: center;">Start-Session</h2>
 
 <form method="POST" action="main.php" style="text-align: center;">
     <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
@@ -36,7 +36,7 @@
 
 <div class="muButton" style="text-align: center;">
     <a href="./portfolio.php">
-        <button class="portfolioButton">
+        <button class="portfolioButton" style="position:relative; left:19px;">
             <b class="thetext">go to your portfolio</b>
         </button>
     </a>
@@ -46,10 +46,10 @@
 <h2 style="text-align: center;">Sign up</h2>
 <form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-    SIN: <input type="text" name="sin"> <br /><br />
-    Name: <input type="text" name="Name"> <br /><br />
-    Email: <input type="email" name="email"> <br /><br />
-    age: <input type="date" name="dob"> <br /><br />
+    SIN: <input type="text" name="sin" placeholder ="SIN" style="position:relative; left:9px;"> <br /><br />
+    Name: <input type="text" name="Name" placeholder ="Name"> <br /><br />
+    Email: <input type="email" name="email" placeholder ="Email"> <br /><br />
+    Age: <input type="date" name="dob" placeholder ="Age" placeholder ="SIN" style="position:relative; left:7px;width:12%;"> <br /><br />
 
     <input type="submit" value="Insert" name="insertSubmit"></p>
 </form>
@@ -73,7 +73,7 @@
 
 <form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-    SIN: <input type="text" name="currentSIN" placeholder="SIN"> <br /><br />
+    SIN: <input type="text" name="currentSIN" placeholder="SIN" placeholder ="SIN" style="position:relative; left:19px;"> <br /><br />
     Old Email: <input type="text" name="newEmail" placeholder ="Old Email"> <br /><br />
     New Email: <input type="text" name="newEmail" placeholder ="New Email"> <br /><br />
     Old Name: <input type="text" name="oldName" placeholder ="Old Name"> <br /><br />

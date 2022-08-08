@@ -36,7 +36,7 @@
 <h2 style="text-align: center;">Insert Values into Portfolio</h2>
 <form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-    ID: <input type="text" name="id" placeholder ="ID"> <br /><br />
+    ID: <input type="text" name="id" placeholder ="ID" style="position:relative; left:22px;"> <br /><br />
     Net Worth: <input type="text" name="networth" placeholder ="Net Worth"> <br /><br />
     Email ID: <input type="text" name="email" placeholder ="Email ID"> <br /><br />
 
@@ -45,12 +45,12 @@
 
 <hr />
 
-<h2 style="text-align: center;">Update Name in Portfolio</h2>
+<h2 style="text-align: center;">Update Net Worth in Portfolio</h2>
 <p style="text-align: center;">The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
 <form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-    Old Net Worth: <input type="text" name="oldNetworth" placeholder ="Old Net Worth"> <br /><br />
+    Email ID: <input type="text" name="emailUpdate" placeholder ="Email ID"> <br /><br />
     New Net Worth: <input type="text" name="newNetworth" placeholder ="New Net Worth"> <br /><br />
 
     <input type="submit" value="Update" name="updateSubmit"></p>
@@ -80,10 +80,16 @@ WHERE Field1 = :Var1 AND Field2 > :Var20 = Incorrect or missing
 
 <hr />
 
-<h2 style="text-align: center;">Count the Tuples in Portfolio</h2>
+<h2 style="text-align: center;">Find The Most Expensive Residential Property</h2>
 <form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
-    <input type="hidden" id="countTupleRequest" name="countTupleRequest">
-    <input type="submit" name="countTuples"></p>
+    <input type="hidden" id="expensiveHouseRequest" name="expensiveHouseRequest">
+    <input type="submit" name="expensiveHouse"></p>
+</form>
+
+<h2 style="text-align: center;">Check Portfolio Net Worth</h2>
+<form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
+    <input type="hidden" id="networthRequest" name="networthRequest">
+    <input type="submit" name="networth"></p>
 </form>
 
 
@@ -182,7 +188,7 @@ function connectToDB() {
 
     // Your username is ora_(CWL_ID) and the password is a(student number). For example,
     // ora_platypus is the username and a12345678 is the password.
-    $db_conn = OCILogon("ora_hmurad01", "a66208828", "dbhost.students.cs.ubc.ca:1522/stu");
+    $db_conn = OCILogon("ora_ritikk7", "a39633730", "dbhost.students.cs.ubc.ca:1522/stu");
 
     if ($db_conn) {
         debugAlertMessage("Database is Connected");
@@ -205,12 +211,13 @@ function disconnectFromDB() {
 function handleUpdateRequest() {
     global $db_conn;
 
-    $old_networth = $_POST['oldNetworth'];
+    $email = $_POST['emailUpdate'];
     $new_networth = $_POST['newNetworth'];
 
     // you need the wrap the old name and new name values with single quotations
-    executePlainSQL("UPDATE Portfolio SET NetWorth='" . $new_networth . "' WHERE NetWorth='" . $old_networth . "'");
+    executePlainSQL("UPDATE Portfolio SET NetWorth='" . $new_networth . "' WHERE EmailID='" . $email . "'");
     OCICommit($db_conn);
+    echo "Net worth of $email is now equal to $new_networth.";
 }
 
 function handleResetRequest() {
@@ -242,13 +249,17 @@ function handleInsertRequest() {
     OCICommit($db_conn);
 }
 
-function handleCountRequest() {
+function handleExpensiveHouseRequest() {
     global $db_conn;
 
-    $result = executePlainSQL("SELECT Count(*) FROM Portfolio");
-
-    if (($row = oci_fetch_row($result)) != false) {
-        echo "<br> The number of tuples in Portfolio: " . $row[0] . "<br>";
+    $result = executePlainSQL(" SELECT Address_, MAX(Value_), Type_ 
+                                FROM RealEstate 
+                                WHERE Value_>=4500 
+                                GROUP BY Address_, Type_ 
+                                HAVING Type_='Residential' ");
+    
+    if(($row = oci_fetch_row($result)) != false) {
+        echo "<br> The following rows match your search: " . $row[0] . "<br>";
     }
 }
 
@@ -294,9 +305,9 @@ function handlePOSTRequest() {
 // A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
 function handleGETRequest() {
     if (connectToDB()) {
-        if (array_key_exists('countTuples', $_GET)) {
-            handleCountRequest();
-        } else if (arrar_key_exists('selectQueryRequest', $_GET)) {
+        if (array_key_exists('expensiveHouseRequest', $_GET)) {
+            handleExpensiveHouseRequest();
+        } else if(arrar_key_exists('selectQueryRequest', $_GET)) {
             handleSelectRequest();
         }
         disconnectFromDB();
@@ -304,10 +315,10 @@ function handleGETRequest() {
 }
 
 if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
-    handlePOSTRequest();
-} else if (isset($_GET['countTupleRequest']) || isset($_GET['selectSubmit'])) {
-    handleGETRequest();
-}
+        handlePOSTRequest();
+    } else if (isset($_GET['expensiveHouse']) || isset($_POST['selectSubmit'])) {
+        handleGETRequest();
+    }
 ?>
 </body>
 </html>
