@@ -24,7 +24,7 @@
 </head>
 
 <body>
-<h2 style="text-align: center;">Start Session</h2>
+<h2 style="text-align: center;">Start-Session</h2>
 
 <form method="POST" action="main.php" style="text-align: center;">
     <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
