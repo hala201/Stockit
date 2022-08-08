@@ -299,12 +299,12 @@ function handleExpensiveHouseRequest() {
 
     $result = executePlainSQL(" SELECT Address_, MAX(Value_), Type_ 
                                 FROM RealEstate 
-                                WHERE Value_>=4500 
+                                WHERE Value_>5000000
                                 GROUP BY Address_, Type_ 
                                 HAVING Type_='Residential' ");
     
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "<br> This is the most expensive Residential Property: " . $row['Address_'] . "<br>";
+        echo "<br> These are the most expensive residential properties: " . $row[0] . "<br>";
     }
 }
 
@@ -318,7 +318,7 @@ function handleMostProfitableCryptoRequest() {
                                 HAVING COUNT(*)>1 ");
     
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "<br> This is the most profitable cryptocurrency " . $row['Symbol'] . "<br>";
+        echo "<br> These are the most profitable cryptocurrencies " . $row[0] . "<br>";
     }
 }
 
