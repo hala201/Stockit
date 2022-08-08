@@ -78,6 +78,41 @@ WHERE Field1 = :Var1 AND Field2 > :Var20 = Incorrect or missing
     <input type="submit" value="select" name="selectSubmit"></p>
 </form>
 
+<!--
+    Demo-ing the Query: Projection
+Create one query of this category, with 3-5 attributes in the projection condition, but not SELECT *. 
+If you wish, you can have the user select the attributes from a drop- down list, but we will accept a hard-coded SELECT 
+statement for the table(s) in question. 
+This can be combined with another step if there are 3-5 attributes in the projection (but not SELECT *).
+
+This criterion is linked to a Learning OutcomeDemo-ing the Query: Join
+Create one query in this category, which joins at least 2 tables and 
+performs a meaningful query, and provide an interface for the user to 
+execute this query. The user must provide at least one value to qualify 
+in the WHERE clause (e.g. join the Customer and the Transaction table to
+ find the names and phone numbers of all customers who have purchased a 
+ specific item).
+-->
+
+<hr />
+
+<h2 style="text-align: center;">Choose a stock market</h2>
+<p style="text-align: center;">find the value, and holding of stocks with the following stock market symbol</p>
+
+<form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
+    <input type="hidden" id="projectJoinQueryRequest" name="projectJoinQueryRequest">
+    stock market: <select name="smSymbol"><br /><br />
+        <option value="AAPL">AAPL</option>
+        <option value="GOOG">GOOG</option>
+        <option value="AMZ">AMZ</option>
+        <option value="AMX">AMX</option>
+        <option value="NASDQ">NASDQ</option>
+    </select>
+
+
+    <input type="submit" value="project" name="projectJoinSubmit"></p>
+</form>
+
 <hr />
 
 <h2 style="text-align: center;">Find The Most Expensive Residential Property</h2>
@@ -285,6 +320,26 @@ function handleSelectRequest(){
     OCICommit($db_conn);
 }
 
+function handleprojectJoinRequest(){
+    global $db_conn;
+    $sm_symbol = $_GET['smSymbol'];
+
+    $result = executeSQL("SELECT Value_, Holding 
+                            FROM Stock s, StockMarket sm
+                            WHERE s.smSymbol = sm.Symbol AND sm.Symbol = '" . $sm_symbol . '"');
+    echo "<br>Retrieved data from table Stock:<br>";
+    echo "<table>";
+    echo "</th><th>Value_</th></tr>Holding</th></tr>";
+
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        echo "</td><td>" . $row["Value_"] . "</td></tr>" . $row["Holding"] . "</td></tr>"; //or just use "echo $row[0]"
+    }
+
+    echo "</table>";
+    
+        //echo "<br> The following rows match your search: " . $selection . "<br>";
+    OCICommit($db_conn);
+}
 // HANDLE ALL POST ROUTES
 // A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
 function handlePOSTRequest() {
