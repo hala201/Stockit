@@ -70,7 +70,7 @@ WHERE Field1 = :Var1 AND Field2 > :Var20 = Incorrect or missing
 <h2 style="text-align: center;">Choose a Real Estate</h2>
 <p style="text-align: center;">There are 5 available real estates to add to your portfolio</p>
 
-<form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
+<form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="selectQueryRequest" name="selectQueryRequest">
     min Buy Price: <input type="text" name="minPrice" placeholder ="minPrice"> <br /><br />
     Max Buy Price: <input type="text" name="maxPrice" placeholder ="maxPrice"> <br /><br />
@@ -165,13 +165,13 @@ See the sample code below for how this function is used */
     }
 }
 
-function printResult($result) { //prints results from a select statement
+function printRealEstateResult($result) { //prints results from a select statement
     echo "<br>Retrieved data from table Portfolio:<br>";
     echo "<table>";
     echo "<tr><th>ID</th><th>Name</th></tr>";
 
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]"
+        echo "<tr><td>" . $row["Address_"] . "</td><td>" . $row["BuyPrice"] . "</td></tr>" . $row["Value_"] . "</td></tr>" . $row["Type_"] . "</td></tr>" . $row["ID"] . "</td></tr>"; //or just use "echo $row[0]"
     }
 
     echo "</table>";
@@ -215,24 +215,12 @@ function handleUpdateRequest() {
 
 function handleResetRequest() {
     global $db_conn;
-    // Drop old table
-    // executePlainSQL("DROP TABLE Portfolio");
-
-    // // Create new table
-    // echo "<br> creating new table <br>";
-    // executePlainSQL("CREATE TABLE Portfolio(ID INT PRIMARY KEY, 
-    //                                         NetWorth INT, 
-    //                                         EmailID CHAR(50)");
-
     $sql = file_get_contents('stocks.sql');
-    $block= <<<_SQL
-    BEGIN
-    $sql
-    END;
-    _SQL;
-  
-    $stmt = oci_parse($conn, $block);
-    oci_execute($stmt);
+    $delimiter = ';';
+    $commands = explode($delimiter, $sql);
+    foreach ($commands as $command) {
+        executePlainSQL($command);
+    }   
     OCICommit($db_conn);
 }
 
@@ -266,15 +254,24 @@ function handleCountRequest() {
 
 function handleSelectRequest(){
     global $db_conn;
-    $min_price = $_POST['minPrice'];
-    $max_price = $_POST['maxPrice'];
+    $min_price = $_GET['minPrice'];
+    $max_price = $_GET['maxPrice'];
 
-    $result = executePlainSQL("SELECT * 
+    $result = executeSQL("SELECT * 
                             FROM RealEstate
                             WHERE BuyPrice >='" . $min_price . "' AND BuyPrice =<' " . $max_price . "'");
-    if(($row = oci_fetch_row($result)) != false) {
-        echo "<br> The following rows match your search: " . $row[0] . "<br>";
+    echo "<br>Retrieved data from table Portfolio:<br>";
+    echo "<table>";
+    echo "<tr><th>Address_</th><th>BuyPrice</th></tr>Value_</th></tr>Type_</th></tr>ID</th></tr>";
+
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        echo "<tr><td>" . $row["Address_"] . "</td><td>" . $row["BuyPrice"] . "</td></tr>" . $row["Value_"] . "</td></tr>" . $row["Type_"] . "</td></tr>" . $row["ID"] . "</td></tr>"; //or just use "echo $row[0]"
     }
+
+    echo "</table>";
+    
+        //echo "<br> The following rows match your search: " . $selection . "<br>";
+    OCICommit($db_conn);
 }
 
 // HANDLE ALL POST ROUTES
@@ -287,7 +284,7 @@ function handlePOSTRequest() {
             handleUpdateRequest();
         } else if (array_key_exists('insertQueryRequest', $_POST)) {
             handleInsertRequest();
-        }
+        } 
 
         disconnectFromDB();
     }
@@ -299,17 +296,16 @@ function handleGETRequest() {
     if (connectToDB()) {
         if (array_key_exists('countTuples', $_GET)) {
             handleCountRequest();
-        } else if(arrar_key_exists('selectQueryRequest', $_GET)) {
+        } else if (arrar_key_exists('selectQueryRequest', $_GET)) {
             handleSelectRequest();
         }
-
         disconnectFromDB();
     }
 }
 
 if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
     handlePOSTRequest();
-} else if (isset($_GET['countTupleRequest']) || isset($_POST['selectSubmit'])) {
+} else if (isset($_GET['countTupleRequest']) || isset($_GET['selectSubmit'])) {
     handleGETRequest();
 }
 ?>
