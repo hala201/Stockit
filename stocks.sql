@@ -268,35 +268,35 @@ VALUES
 
 INSERT INTO Crypto (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_)
 VALUES
-    ('BTC' , 'QWER1234567890', 77000, 500, 7500, 7000, 'Bitcoin');
+    ('BTC' , 'QWER1234567890', 3000000, 500, 5000000, 2000000, 'Bitcoin');
 INSERT INTO Crypto (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_)
 VALUES
-    ('ETH' , 'WWER1234567890', 69000, 400, 7400, 7000, 'Ethereum');
+    ('ETH' , 'WWER1234567890', 75000, 400, 200000, 125000, 'Ethereum');
 INSERT INTO Crypto (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_)
 VALUES
-    ('APE' , 'EWER1234567890', 50000, 300, 7300, 7000, 'ApeCoin');
+    ('APE' , 'EWER1234567890', 7000, 300, 20000, 13000, 'ApeCoin');
 INSERT INTO Crypto (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_)
 VALUES
-    ('ETH' , 'RWER1234567890', 10000, 200, 7200, 7000, 'Ethereum');
+    ('ETH' , 'RWER1234567890', 60000, 200, 160000, 100000, 'Ethereum');
 INSERT INTO Crypto (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_)
 VALUES
-    ('BTC' , 'TWER1234567890', 33000, 100, 7100, 7000, 'Bitcoin');
+    ('BTC' , 'TWER1234567890', 3000000, 100, 500000, 200000, 'Bitcoin');
 
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
-    ('AAPL', 'NY USA');
+    ('NYSE', 'NY USA');
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
-    ('GOOG', 'NY USA');
+    ('NASDAQ', 'NY USA');
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
-    ('AMZ', 'ON Canada');
+    ('TSX', 'ON Canada');
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
-    ('AMX', 'BC Canada');
+    ('NSE', 'MH India');
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
-    ('NASDQ', 'ML Italy');
+    ('LSE', 'LD UK');
 
 INSERT INTO Company (Name_, Type_, Industry)
 VALUES
@@ -314,19 +314,19 @@ INSERT INTO Company (Name_, Type_, Industry)
 VALUES
     ('Alpha', 'Public', 'Cosmetics');
 
-INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
+INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, smSymbol)
 VALUES
-    ('WAYNE' , 'QWER1234567890', 77000, 500, 7500, 7000, 'Gucci' , 'AAPL');
-INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
+    ('WAYNE' , 'QWER1234567890', 10000, 500, 200000, 190000, 'NYSE');
+INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, smSymbol)
 VALUES
-    ('STAR' , 'WWER1234567890', 69000, 400, 7400, 7000, 'Sofie' , 'NASDQ');
-INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
+    ('STAR' , 'WWER1234567890', 2750, 400, 7500, 4750, 'NYSE');
+INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, smSymbol)
 VALUES
-    ('GOOGL' , 'EWER1234567890', 50000, 300, 7300, 7000, 'Apple' , 'AMZ');
-INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
+    ('GOOGL' , 'EWER1234567890', 1800, 300, 4800, 3000, 'NASDAQ');
+INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, smSymbol)
 VALUES
-    ('APL' , 'RWER1234567890', 10000, 200, 7200, 7000, 'Microsoft'  , 'AAPL');
-INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
+    ('APL' , 'RWER1234567890', 4000, 200, 6400, 2400, 'NASDAQ');
+INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, smSymbol)
 VALUES
-    ('MSFT' , 'TWER1234567890', 33000, 100, 7100, 7000, 'Alpha'  , 'NASDQ');
+    ('MSFT' , 'TWER1234567890', 4500, 100, 8100, 3600, 'NASDAQ');
 
