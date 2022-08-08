@@ -248,8 +248,8 @@ function handleDeleteRequest() {
 }
 function handleResetRequest() {
     global $db_conn;
+    //$db_conn = OCILogon("ora_hmurad01", "a66208828", "dbhost.students.cs.ubc.ca:1522/stu");
     // Drop old table
-   // executePlainSQL("alter session set ddl_lock_timeout = 600");
     // executePlainSQL("DROP TABLE User_ CASCADE CONSTRAINTS");
 
 
@@ -261,14 +261,22 @@ function handleResetRequest() {
     //                                     EmailID CHAR(50),
     //                                     PRIMARY KEY(EmailID))");
     $sql = file_get_contents('stocks.sql');
-    $block= <<<_SQL
-    BEGIN
-    $sql
-    END;
-    _SQL;
-  
-    $stmt = oci_parse($conn, $block);
-    oci_execute($stmt);
+    // $block= <<<_SQL
+    // BEGIN
+    // $sql
+    // END;
+    // _SQL;
+ 
+    // $stmt = oci_parse($db_conn, $block);
+    // executePlainSQL($stmt);
+    // OCICommit($db_conn);
+
+    $delimiter = ';';
+    $commands = explode($delimiter, $sql);
+    
+    foreach ($commands as $command) {
+        executePlainSQL($command);
+    }   
     OCICommit($db_conn);
 }
 
