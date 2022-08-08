@@ -155,19 +155,20 @@ VALUES
 
 INSERT INTO RealEstate (ID, Address_, BuyPrice, Value_, Type_)
 VALUES
-    (77, '1 Gotham, NY', 1000, 10, 'Residential');
+    (77, '1 Gotham, NY', 1000, 2000, 'Residential');
 INSERT INTO RealEstate (ID, Address_, BuyPrice, Value_, Type_)
 VALUES
-    (69, '2 Gotham, NY', 2000,20, 'Residential');
+    (69, '2 Gotham, NY', 2000, 3000, 'Residential');
 INSERT INTO RealEstate (ID, Address_, BuyPrice, Value_, Type_)
 VALUES
-    (50, '3 Gotham, NY', 3000, 30, 'Residential');
+    (50, '3 Gotham, NY', 3000, 4000, 'Residential');
 INSERT INTO RealEstate (ID, Address_, BuyPrice, Value_, Type_)
 VALUES
-    (10, '4 Gotham, NY', 4000, 40, 'Residential');
+    (10, '4 Gotham, NY', 4000, 5000, 'Residential');
 INSERT INTO RealEstate (ID, Address_, BuyPrice, Value_, Type_)
 VALUES
-    (33, '5 Gotham, NY', 5000, 50, 'Commercial');
+    (33, '5 Gotham, NY', 5000, 6000, 'Commercial');
+
 INSERT INTO Agent (ID, Name_)
 VALUES
     (1, 'Kris Ellio');
