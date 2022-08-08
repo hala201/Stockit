@@ -315,7 +315,7 @@ function handleMostProfitableCryptoRequest() {
                                 FROM Crypto 
                                 WHERE Profit>0 
                                 GROUP BY Symbol 
-                                HAVING COUNT(*)=1 ");
+                                HAVING COUNT(*)>1 ");
     
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
         echo "<br> This is the most profitable cryptocurrency " . $row['Symbol'] . "<br>";
