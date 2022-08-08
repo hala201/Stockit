@@ -19,7 +19,19 @@
 <html>
 <head>
     <title>Investment Portfolio</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 </head>
+
+<style>
+  body {
+    background-image: url("https://media.istockphoto.com/photos/graphs-and-charts-picture-id463803535?k=20&m=463803535&s=612x612&w=0&h=eBbkumP9Hm11XjYiGyhrxtBU2amXQ2z_vMYBdleQSlc=");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+</style>
 
 <body>
 <h2 style="text-align: center;">Reset</h2>
@@ -28,7 +40,7 @@
 <form method="POST" action="portfolio.php" style="text-align: center;">
     <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
     <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
-    <p><input type="submit" value="Reset" name="reset"></p>
+    <p><input type="submit" value="Reset" name="reset" style="position:relative; left:30px;"></p>
 </form>
 
 <hr />
@@ -36,11 +48,11 @@
 <h2 style="text-align: center;">Insert Values into Portfolio</h2>
 <form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-    ID: <input type="text" name="id" placeholder ="ID" style="position:relative; left:22px;"> <br /><br />
-    Net Worth: <input type="text" name="networth" placeholder ="Net Worth"> <br /><br />
-    Email ID: <input type="text" name="email" placeholder ="Email ID"> <br /><br />
+    ID: <input type="text" name="id" placeholder ="ID" style="position:relative; left:35px;"> <br /><br />
+    Net Worth: <input type="text" name="networth" placeholder ="Net Worth" style="position:relative; left:9px;"> <br /><br />
+    Email ID: <input type="text" name="email" placeholder ="Email ID" style="position:relative; left:19px;"> <br /><br />
 
-    <input type="submit" value="Insert" name="insertSubmit"></p>
+    <input type="submit" value="Insert" name="insertSubmit" style="position:relative; left:35px;"></p>
 </form>
 
 <hr />
@@ -50,10 +62,10 @@
 
 <form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-    Email ID: <input type="text" name="emailUpdate" placeholder ="Email ID"> <br /><br />
+    Email ID: <input type="text" name="emailUpdate" placeholder ="Email ID" style="position:relative; left:24px;"> <br /><br />
     New Net Worth: <input type="text" name="newNetworth" placeholder ="New Net Worth"> <br /><br />
 
-    <input type="submit" value="Update" name="updateSubmit"></p>
+    <input type="submit" value="Update" name="updateSubmit" style="position:relative; left:35px;"></p>
 </form>
 <!-- 
     SELECTION
@@ -75,21 +87,21 @@ WHERE Field1 = :Var1 AND Field2 > :Var20 = Incorrect or missing
     min Buy Price: <input type="text" name="minPrice" placeholder ="minPrice"> <br /><br />
     Max Buy Price: <input type="text" name="maxPrice" placeholder ="maxPrice"> <br /><br />
 
-    <input type="submit" value="select" name="selectSubmit"></p>
+    <input type="submit" value="select" name="selectSubmit" style="position:relative; left:35px;"></p>
 </form>
 
 <hr />
 
-<h2 style="text-align: center;">Count the Tuples in Portfolio</h2>
+<h2 style="text-align: center;" style="position:relative; left:35px;">Count the Tuples in Portfolio</h2>
 <form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="countTupleRequest" name="countTupleRequest">
-    <input type="submit" name="countTuples"></p>
+    <input type="submit" name="countTuples" style="position:relative; left:35px;"></p>
 </form>
 
-<h2 style="text-align: center;">Check Portfolio Net Worth</h2>
+<h2 style="text-align: center;" style="position:relative; left:35px;">Check Portfolio Net Worth</h2>
 <form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="networthRequest" name="networthRequest">
-    <input type="submit" name="networth"></p>
+    <input type="submit" name="networth" style="position:relative; left:35px;"></p>
 </form>
 
 

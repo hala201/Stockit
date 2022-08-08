@@ -23,13 +23,24 @@
 
 </head>
 
+
+<style>
+  body {
+    background-image: url("https://static.vecteezy.com/system/resources/previews/005/084/691/original/businessman-worried-about-stock-market-volatility-he-was-reluctant-to-buy-or-sell-in-this-situation-free-vector.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+</style>
+
 <body>
 <h2 style="text-align: center;">Start-Session</h2>
 
 <form method="POST" action="main.php" style="text-align: center;">
     <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
     <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
-    <p><input type="submit" value="Reset" name="reset"></p>
+    <p><input type="submit" value="Reset" name="reset" ></p>
 </form>
 
 <hr />
@@ -60,14 +71,7 @@
 <p style="text-align: center;">If you are a current user, you can update your email or name below. The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
 
-<style>
-   body{
 
-    background:url('<?php $a = array('milestone1.jpg', 'img2.jpg', 'img3.jpg'); echo $a[array_rand($a)];?>');
-   }
-    
-
-    </style>
 
 
 
