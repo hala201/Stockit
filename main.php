@@ -24,7 +24,7 @@
 </head>
 
 <body>
-<h2 style="text-align: center;">Start Session</h2>
+<h2 style="text-align: center;">Start-Session</h2>
 
 <form method="POST" action="main.php" style="text-align: center;">
     <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
@@ -33,7 +33,7 @@
 </form>
 
 <hr />
-<!--
+
 <div class="muButton" style="text-align: center;">
     <a href="./portfolio.php">
         <button class="portfolioButton">
@@ -41,7 +41,7 @@
         </button>
     </a>
 </div>
--->
+
 
 <h2 style="text-align: center;">Sign up</h2>
 <form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
@@ -248,27 +248,19 @@ function handleDeleteRequest() {
 }
 function handleResetRequest() {
     global $db_conn;
-    // Drop old table
-   // executePlainSQL("alter session set ddl_lock_timeout = 600");
-    // executePlainSQL("DROP TABLE User_ CASCADE CONSTRAINTS");
-
-
-    // // Create new table
-    // echo "<br> creating new table <br>";
-    // executePlainSQL("CREATE TABLE User_(SIN_ INT,
-    //                                     Name_ CHAR(50),
-    //                                     DOB DATE,
-    //                                     EmailID CHAR(50),
-    //                                     PRIMARY KEY(EmailID))");
     $sql = file_get_contents('stocks.sql');
-    $block= <<<_SQL
-    BEGIN
-    $sql
-    END;
-    _SQL;
-  
-    $stmt = oci_parse($conn, $block);
-    oci_execute($stmt);
+    // $block= <<<_SQL
+    // BEGIN
+    // $sql
+    // END;
+    // _SQL;
+    // $stmt = oci_parse($db_conn, $block);
+    // executePlainSQL($stmt);
+    $delimiter = ';';
+    $commands = explode($delimiter, $sql);
+    foreach ($commands as $command) {
+        executePlainSQL($command);
+    }   
     OCICommit($db_conn);
 }
 
@@ -294,10 +286,10 @@ function handleInsertRequest() {
 function handleCountRequest() {
     global $db_conn;
 
-    $result = executePlainSQL("SELECT Count(*) FROM demoTable");
+    $result = executePlainSQL("SELECT Count(*) FROM User_");
 
     if (($row = oci_fetch_row($result)) != false) {
-        echo "<br> The number of tuples in demoTable: " . $row[0] . "<br>";
+        echo "<br> The number of users: " . $row[0] . "<br>";
     }
 }
 

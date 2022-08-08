@@ -55,13 +55,35 @@
 
     <input type="submit" value="Update" name="updateSubmit"></p>
 </form>
+<!-- 
+    SELECTION
+Create one query of this category and provide an interface
+for the user to specify the values of the selection
+conditions to be returned. Example:
+SELECT ...
+FROM ...
+WHERE Field1 = :Var1 AND Field2 > :Var20 = Incorrect or missing
+-->
 
 <hr />
 
-<h2 style="text-align: center;">Find The Most Expensive Residential Property</h2>
+<h2 style="text-align: center;">Choose a Real Estate</h2>
+<p style="text-align: center;">There are 5 available real estates to add to your portfolio</p>
+
+<form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
+    <input type="hidden" id="selectQueryRequest" name="selectQueryRequest">
+    min Buy Price: <input type="text" name="minPrice" placeholder ="minPrice"> <br /><br />
+    Max Buy Price: <input type="text" name="maxPrice" placeholder ="maxPrice"> <br /><br />
+
+    <input type="submit" value="select" name="selectSubmit"></p>
+</form>
+
+<hr />
+
+<h2 style="text-align: center;">Count the Tuples in Portfolio</h2>
 <form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
-    <input type="hidden" id="expensiveHouseRequest" name="expensiveHouseRequest">
-    <input type="submit" name="expensiveHouse"></p>
+    <input type="hidden" id="countTupleRequest" name="countTupleRequest">
+    <input type="submit" name="countTuples"></p>
 </form>
 
 <h2 style="text-align: center;">Check Portfolio Net Worth</h2>
@@ -69,6 +91,10 @@
     <input type="hidden" id="networthRequest" name="networthRequest">
     <input type="submit" name="networth"></p>
 </form>
+
+
+
+
 
 <?php
 //this tells the system that it's no longer just parsing html; it's now parsing PHP
@@ -196,7 +222,7 @@ function handleUpdateRequest() {
 
 function handleResetRequest() {
     global $db_conn;
-    // // Drop old table
+    // Drop old table
     // executePlainSQL("DROP TABLE Portfolio");
 
     // // Create new table
@@ -204,12 +230,14 @@ function handleResetRequest() {
     // executePlainSQL("CREATE TABLE Portfolio(ID INT PRIMARY KEY, 
     //                                         NetWorth INT, 
     //                                         EmailID CHAR(50)");
+
     $sql = file_get_contents('stocks.sql');
     $block= <<<_SQL
     BEGIN
     $sql
     END;
     _SQL;
+  
     $stmt = oci_parse($conn, $block);
     oci_execute($stmt);
     OCICommit($db_conn);
@@ -247,6 +275,19 @@ function handleExpensiveHouseRequest() {
     }
 }
 
+function handleSelectRequest(){
+    global $db_conn;
+    $min_price = $_POST['minPrice'];
+    $max_price = $_POST['maxPrice'];
+
+    $result = executePlainSQL("SELECT * 
+                            FROM RealEstate
+                            WHERE BuyPrice >='" . $min_price . "' AND BuyPrice =<' " . $max_price . "'");
+    if(($row = oci_fetch_row($result)) != false) {
+        echo "<br> The following rows match your search: " . $row[0] . "<br>";
+    }
+}
+
 // HANDLE ALL POST ROUTES
 // A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
 function handlePOSTRequest() {
@@ -269,6 +310,8 @@ function handleGETRequest() {
     if (connectToDB()) {
         if (array_key_exists('expensiveHouseRequest', $_GET)) {
             handleExpensiveHouseRequest();
+        } else if(arrar_key_exists('selectQueryRequest', $_GET)) {
+            handleSelectRequest();
         }
         disconnectFromDB();
     }
@@ -276,7 +319,7 @@ function handleGETRequest() {
 
 if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
     handlePOSTRequest();
-} else if (isset($_GET['expensiveHouse'])) {
+} else if (isset($_GET['expensiveHouse']) || isset($_POST['selectSubmit'])) {
     handleGETRequest();
 }
 ?>
