@@ -36,7 +36,7 @@
 <h2 style="text-align: center;">Insert Values into Portfolio</h2>
 <form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-    ID: <input type="text" name="id" placeholder ="ID"> <br /><br />
+    ID: <input type="text" name="id" placeholder ="ID" style="position:relative; left:22px;"> <br /><br />
     Net Worth: <input type="text" name="networth" placeholder ="Net Worth"> <br /><br />
     Email ID: <input type="text" name="email" placeholder ="Email ID"> <br /><br />
 
