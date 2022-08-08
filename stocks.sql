@@ -312,21 +312,27 @@ VALUES
     ('Microsoft', 'Public', 'Tech');
 INSERT INTO Company (Name_, Type_, Industry)
 VALUES
-    ('Alpha', 'Public', 'Cosmetics');
+    ('Alphabet', 'Public', 'Conglomerate');
+INSERT INTO Company (Name_, Type_, Industry)
+VALUES
+    ('Wayne', 'Public', 'Conglomerate');
+INSERT INTO Company (Name_, Type_, Industry)
+VALUES
+    ('Star Labs', 'Public', 'Research');
 
-INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, smSymbol)
+INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
-    ('WAYNE' , 'QWER1234567890', 10000, 500, 200000, 190000, 'NYSE');
-INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, smSymbol)
+    ('WAYNE' , 'QWER1234567890', 10000, 500, 200000, 190000, 'Wayne', 'NYSE');
+INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
-    ('STAR' , 'WWER1234567890', 2750, 400, 7500, 4750, 'NYSE');
-INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, smSymbol)
+    ('STAR' , 'WWER1234567890', 2750, 400, 7500, 4750, 'Star Labs', 'NYSE');
+INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
-    ('GOOGL' , 'EWER1234567890', 1800, 300, 4800, 3000, 'NASDAQ');
-INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, smSymbol)
+    ('GOOGL' , 'EWER1234567890', 1800, 300, 4800, 3000, 'Alphabet', 'NASDAQ');
+INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
-    ('APL' , 'RWER1234567890', 4000, 200, 6400, 2400, 'NASDAQ');
-INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, smSymbol)
+    ('APL' , 'RWER1234567890', 4000, 200, 6400, 2400, 'Apple', 'NASDAQ');
+INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
-    ('MSFT' , 'TWER1234567890', 4500, 100, 8100, 3600, 'NASDAQ');
+    ('MSFT' , 'TWER1234567890', 4500, 100, 8100, 3600, 'Microsoft', 'NASDAQ');
 
