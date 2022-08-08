@@ -14,7 +14,7 @@
   To get the file to work, you must place it somewhere where your
   Apache server can run it, and you must rename it to have a ".php"
   extension.  You must also change the username and password on the
-  OCILogon below to be your ORACLE username and password -->
+  OCILogon below to be your ORACLE username and password   -->
 
 <html>
 <head>
@@ -57,7 +57,7 @@
 
 <hr />
 
-<h2 style="text-align: center;">Update Name in Portfolio</h2>
+<h2 style="text-align: center;">Update Net Worth in Portfolio</h2>
 <p style="text-align: center;">The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
 <form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
@@ -82,7 +82,7 @@ WHERE Field1 = :Var1 AND Field2 > :Var20 = Incorrect or missing
 <h2 style="text-align: center;">Choose a Real Estate</h2>
 <p style="text-align: center;">There are 5 available real estates to add to your portfolio</p>
 
-<form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
+<form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="selectQueryRequest" name="selectQueryRequest">
     min Buy Price: <input type="text" name="minPrice" placeholder ="minPrice"> <br /><br />
     Max Buy Price: <input type="text" name="maxPrice" placeholder ="maxPrice"> <br /><br />
@@ -90,23 +90,56 @@ WHERE Field1 = :Var1 AND Field2 > :Var20 = Incorrect or missing
     <input type="submit" value="select" name="selectSubmit" style="position:relative; left:35px;"></p>
 </form>
 
+<!--
+    Demo-ing the Query: Projection
+Create one query of this category, with 3-5 attributes in the projection condition, but not SELECT *. 
+If you wish, you can have the user select the attributes from a drop- down list, but we will accept a hard-coded SELECT 
+statement for the table(s) in question. 
+This can be combined with another step if there are 3-5 attributes in the projection (but not SELECT *).
+
+This criterion is linked to a Learning OutcomeDemo-ing the Query: Join
+Create one query in this category, which joins at least 2 tables and 
+performs a meaningful query, and provide an interface for the user to 
+execute this query. The user must provide at least one value to qualify 
+in the WHERE clause (e.g. join the Customer and the Transaction table to
+ find the names and phone numbers of all customers who have purchased a 
+ specific item).
+-->
+
 <hr />
 
-<h2 style="text-align: center;" style="position:relative; left:35px;">Count the Tuples in Portfolio</h2>
+<h2 style="text-align: center;">Choose a stock market</h2>
+<p style="text-align: center;">find the value, and holding of stocks with the following stock market symbol</p>
+
 <form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
-    <input type="hidden" id="countTupleRequest" name="countTupleRequest">
-    <input type="submit" name="countTuples" style="position:relative; left:35px;"></p>
+    <input type="hidden" id="projectJoinQueryRequest" name="projectJoinQueryRequest">
+    stock market: <select name="smSymbol"><br /><br />
+        <option value="AAPL">AAPL</option>
+        <option value="GOOG">GOOG</option>
+        <option value="AMZ">AMZ</option>
+        <option value="AMX">AMX</option>
+        <option value="NASDQ">NASDQ</option>
+    </select>
+
+
+    <input type="submit" value="project" name="projectJoinSubmit"></p>
 </form>
 
-<h2 style="text-align: center;" style="position:relative; left:35px;">Check Portfolio Net Worth</h2>
+<hr />
+
+<h2 style="text-align: center;">Find The Most Expensive Residential Property</h2>
 <form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
-    <input type="hidden" id="networthRequest" name="networthRequest">
-    <input type="submit" name="networth" style="position:relative; left:35px;"></p>
+    <input type="hidden" id="expensiveHouseRequest" name="expensiveHouseRequest">
+    <input type="submit" name="expensiveHouse"></p>
 </form>
 
+<hr />
 
-
-
+<h2 style="text-align: center;">Find The Most Profitable Crypto</h2>
+<form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
+    <input type="hidden" id="profitableCryptoRequest" name="profitableCryptoRequest">
+    <input type="submit" name="profitableCrypto"></p>
+</form>
 
 <?php
 //this tells the system that it's no longer just parsing html; it's now parsing PHP
@@ -183,13 +216,13 @@ See the sample code below for how this function is used */
     }
 }
 
-function printResult($result) { //prints results from a select statement
+function printRealEstateResult($result) { //prints results from a select statement
     echo "<br>Retrieved data from table Portfolio:<br>";
     echo "<table>";
     echo "<tr><th>ID</th><th>Name</th></tr>";
 
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]"
+        echo "<tr><td>" . $row["Address_"] . "</td><td>" . $row["BuyPrice"] . "</td></tr>" . $row["Value_"] . "</td></tr>" . $row["Type_"] . "</td></tr>" . $row["ID"] . "</td></tr>"; //or just use "echo $row[0]"
     }
 
     echo "</table>";
@@ -234,24 +267,12 @@ function handleUpdateRequest() {
 
 function handleResetRequest() {
     global $db_conn;
-    // Drop old table
-    // executePlainSQL("DROP TABLE Portfolio");
-
-    // // Create new table
-    // echo "<br> creating new table <br>";
-    // executePlainSQL("CREATE TABLE Portfolio(ID INT PRIMARY KEY, 
-    //                                         NetWorth INT, 
-    //                                         EmailID CHAR(50)");
-
     $sql = file_get_contents('stocks.sql');
-    $block= <<<_SQL
-    BEGIN
-    $sql
-    END;
-    _SQL;
-  
-    $stmt = oci_parse($conn, $block);
-    oci_execute($stmt);
+    $delimiter = ';';
+    $commands = explode($delimiter, $sql);
+    foreach ($commands as $command) {
+        executePlainSQL($command);
+    }   
     OCICommit($db_conn);
 }
 
@@ -282,24 +303,67 @@ function handleExpensiveHouseRequest() {
                                 GROUP BY Address_, Type_ 
                                 HAVING Type_='Residential' ");
     
-    while (($row = OCI_Fetch_Array($result))) {
-        echo "<br> The number of tuples in Portfolio: " . $row[0] . "<br>";
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        echo "<br> This is the most expensive Residential Property: " . $row['Address_'] . "<br>";
+    }
+}
+
+function handleMostProfitableCryptoRequest() {
+    global $db_conn;
+
+    $result = executePlainSQL(" SELECT Symbol, MAX(Profit) 
+                                FROM Crypto 
+                                WHERE Profit>0 
+                                GROUP BY Symbol 
+                                HAVING COUNT(*)=1 ");
+    
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        echo "<br> This is the most profitable cryptocurrency " . $row['Symbol'] . "<br>";
     }
 }
 
 function handleSelectRequest(){
     global $db_conn;
-    $min_price = $_POST['minPrice'];
-    $max_price = $_POST['maxPrice'];
+    $min_price = $_GET['minPrice'];
+    $max_price = $_GET['maxPrice'];
 
-    $result = executePlainSQL("SELECT * 
+    $result = executeSQL("SELECT * 
                             FROM RealEstate
                             WHERE BuyPrice >='" . $min_price . "' AND BuyPrice =<' " . $max_price . "'");
-    if(($row = oci_fetch_row($result)) != false) {
-        echo "<br> The following rows match your search: " . $row[0] . "<br>";
+    echo "<br>Retrieved data from table Portfolio:<br>";
+    echo "<table>";
+    echo "<tr><th>Address_</th><th>BuyPrice</th></tr>Value_</th></tr>Type_</th></tr>ID</th></tr>";
+
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        echo "<tr><td>" . $row["Address_"] . "</td><td>" . $row["BuyPrice"] . "</td></tr>" . $row["Value_"] . "</td></tr>" . $row["Type_"] . "</td></tr>" . $row["ID"] . "</td></tr>"; //or just use "echo $row[0]"
     }
+
+    echo "</table>";
+    
+        //echo "<br> The following rows match your search: " . $selection . "<br>";
+    OCICommit($db_conn);
 }
 
+function handleprojectJoinRequest(){
+    global $db_conn;
+    $sm_symbol = $_GET['smSymbol'];
+
+    $result = executeSQL("SELECT Value_, Holding 
+                            FROM Stock s, StockMarket sm
+                            WHERE s.smSymbol = sm.Symbol AND sm.Symbol = '" . $sm_symbol . '"');
+    echo "<br>Retrieved data from table Stock:<br>";
+    echo "<table>";
+    echo "</th><th>Value_</th></tr>Holding</th></tr>";
+
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        echo "</td><td>" . $row["Value_"] . "</td></tr>" . $row["Holding"] . "</td></tr>"; //or just use "echo $row[0]"
+    }
+
+    echo "</table>";
+    
+        //echo "<br> The following rows match your search: " . $selection . "<br>";
+    OCICommit($db_conn);
+}
 // HANDLE ALL POST ROUTES
 // A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
 function handlePOSTRequest() {
@@ -310,7 +374,7 @@ function handlePOSTRequest() {
             handleUpdateRequest();
         } else if (array_key_exists('insertQueryRequest', $_POST)) {
             handleInsertRequest();
-        }
+        } 
 
         disconnectFromDB();
     }
@@ -322,18 +386,20 @@ function handleGETRequest() {
     if (connectToDB()) {
         if (array_key_exists('expensiveHouseRequest', $_GET)) {
             handleExpensiveHouseRequest();
-        } else if(arrar_key_exists('selectQueryRequest', $_GET)) {
+        } else if(array_key_exists('selectQueryRequest', $_GET)) {
             handleSelectRequest();
+        } else if(array_key_exists('profitableCryptoRequest', $_GET)) {
+            handleMostProfitableCryptoRequest();
         }
         disconnectFromDB();
     }
 }
 
 if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
-    handlePOSTRequest();
-} else if (isset($_GET['expensiveHouse']) || isset($_POST['selectSubmit'])) {
-    handleGETRequest();
-}
+        handlePOSTRequest();
+    } else if (isset($_GET['expensiveHouse']) || isset($_POST['selectSubmit']) || isset($_GET['profitableCrypto'])) {
+        handleGETRequest();
+    }
 ?>
 </body>
 </html>
