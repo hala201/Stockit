@@ -121,15 +121,13 @@ in the WHERE clause (e.g. join the Customer and the Transaction table to
     <input type="submit" name="expensiveHouse"></p>
 </form>
 
-<h2 style="text-align: center;">Check Portfolio Net Worth</h2>
+<hr />
+
+<h2 style="text-align: center;">Find The Most Profitable Crypto</h2>
 <form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
-    <input type="hidden" id="networthRequest" name="networthRequest">
-    <input type="submit" name="networth"></p>
+    <input type="hidden" id="profitableCryptoRequest" name="profitableCryptoRequest">
+    <input type="submit" name="profitableCrypto"></p>
 </form>
-
-
-
-
 
 <?php
 //this tells the system that it's no longer just parsing html; it's now parsing PHP
@@ -293,8 +291,22 @@ function handleExpensiveHouseRequest() {
                                 GROUP BY Address_, Type_ 
                                 HAVING Type_='Residential' ");
     
-    if(($row = oci_fetch_row($result)) != false) {
-        echo "<br> The following rows match your search: " . $row[0] . "<br>";
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        echo "<br> This is the most expensive Residential Property: " . $row['Address_'] . "<br>";
+    }
+}
+
+function handleMostProfitableCryptoRequest() {
+    global $db_conn;
+
+    $result = executePlainSQL(" SELECT Symbol, MAX(Profit) 
+                                FROM Crypto 
+                                WHERE Profit>0 
+                                GROUP BY Symbol 
+                                HAVING COUNT(*)=1 ");
+    
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        echo "<br> This is the most profitable cryptocurrency " . $row['Symbol'] . "<br>";
     }
 }
 
@@ -362,8 +374,10 @@ function handleGETRequest() {
     if (connectToDB()) {
         if (array_key_exists('expensiveHouseRequest', $_GET)) {
             handleExpensiveHouseRequest();
-        } else if(arrar_key_exists('selectQueryRequest', $_GET)) {
+        } else if(array_key_exists('selectQueryRequest', $_GET)) {
             handleSelectRequest();
+        } else if(array_key_exists('profitableCryptoRequest', $_GET)) {
+            handleMostProfitableCryptoRequest();
         }
         disconnectFromDB();
     }
@@ -371,7 +385,7 @@ function handleGETRequest() {
 
 if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['expensiveHouse']) || isset($_POST['selectSubmit'])) {
+    } else if (isset($_GET['expensiveHouse']) || isset($_POST['selectSubmit']) || isset($_GET['profitableCrypto'])) {
         handleGETRequest();
     }
 ?>
