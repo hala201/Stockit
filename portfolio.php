@@ -347,13 +347,13 @@ function handleSelectRequest(){
 }
 
 
-function handleDivision() {
-    global $db_conn;
+// function handleDivision() {
+//     global $db_conn;
 
-    $portf = $_GET['']
+//     $portf = $_GET['']
     
-    $result = executeSQL("SELECT *
-                           FROM ")
+//     $result = executeSQL("SELECT *
+//                            FROM ")
 
 
 
@@ -361,7 +361,7 @@ function handleDivision() {
 
 
 
-}
+// }
 
 
 function handleprojectJoinRequest(){
@@ -418,7 +418,7 @@ function handleGETRequest() {
 
 if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['expensiveHouse']) || isset($_GET['selectSubmit'])) {
+    } else if (isset($_GET['expensiveHouse']) || isset($_GET['selectSubmit']) || isset($_GET['profitableCrypto'])) {
         debugAlertMessage("before GET handle");
         handleGETRequest();
         debugAlertMessage("GET handle");
