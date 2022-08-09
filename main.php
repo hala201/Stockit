@@ -112,7 +112,7 @@
 
 $success = True; //keep track of errors so it redirects the page only if there are no errors
 $db_conn = NULL; // edit the login credentials in connectToDB()
-$show_debug_alert_messages = False; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
+$show_debug_alert_messages = True; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
 $profpic = "milestone1.jpg";
 function debugAlertMessage($message) {
     global $show_debug_alert_messages;
@@ -248,7 +248,7 @@ function handleDeleteRequest() {
 }
 function handleResetRequest() {
     global $db_conn;
-    $sql = file_get_contents('stocks.sql');
+    $sql = trim(file_get_contents('stocks.sql'));
     // $block= <<<_SQL
     // BEGIN
     // $sql
