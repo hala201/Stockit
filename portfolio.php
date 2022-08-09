@@ -347,21 +347,28 @@ function handleSelectRequest(){
 }
 
 
-function handleDivision() {
+   function handleDivision() {
+
     global $db_conn;
+    SELECT Name
+    FROM Company 
+    WHERE NOT EXISTS
+    (   SELECT Name
+        FROM Stock
+        GROUP BY Name
+        EXCEPT
+        (
+            SELECT Stock.Name
+            FROM Stock, Company
+            WHERE Company.Name = Stock.Name
+        )
+    )
 
-    $portf = $_GET['']
     
-    $result = executeSQL("SELECT *
-                           FROM ")
 
 
 
-
-
-
-
-}
+   }
 
 
 function handleprojectJoinRequest(){
