@@ -147,7 +147,7 @@ in the WHERE clause (e.g. join the Customer and the Transaction table to
 
 $success = True; //keep track of errors so it redirects the page only if there are no errors
 $db_conn = NULL; // edit the login credentials in connectToDB()
-$show_debug_alert_messages = False; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
+$show_debug_alert_messages = True; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
 
 function debugAlertMessage($message) {
     global $show_debug_alert_messages;
@@ -328,15 +328,15 @@ function handleSelectRequest(){
     $min_price = $_GET['minPrice'];
     $max_price = $_GET['maxPrice'];
 
-    $result = executeSQL("SELECT * 
+    $result = executePlainSQL("SELECT * 
                             FROM RealEstate
-                            WHERE BuyPrice >='" . $min_price . "' AND BuyPrice =<' " . $max_price . "'");
+                            WHERE BuyPrice > $min_price AND BuyPrice < $max_price");
     echo "<br>Retrieved data from table Portfolio:<br>";
     echo "<table>";
-    echo "<tr><th>Address_</th><th>BuyPrice</th></tr>Value_</th></tr>Type_</th></tr>ID</th></tr>";
+    echo "<tr><th>Address</th><th>BuyPrice</th><th>Value</th><th>Type</th><th>ID</th></tr>";
 
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "<tr><td>" . $row["Address_"] . "</td><td>" . $row["BuyPrice"] . "</td></tr>" . $row["Value_"] . "</td></tr>" . $row["Type_"] . "</td></tr>" . $row["ID"] . "</td></tr>"; //or just use "echo $row[0]"
+        echo "<tr><td>" . $row["ADDRESS_"] . "</td><td>" . $row["BUYPRICE"] . "</td><td>" . $row["VALUE_"] . "</td><td>" . $row["TYPE_"] . "</td><td>" . $row["ID"] . "</td></tr>"; //or just use "echo $row[0]"
     }
 
     echo "</table>";
@@ -375,7 +375,7 @@ function handleprojectJoinRequest(){
     echo "</th><th>Value_</th></tr>Holding</th></tr>";
 
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "</td><td>" . $row["Value_"] . "</td></tr>" . $row["Holding"] . "</td></tr>"; //or just use "echo $row[0]"
+        echo "</td><td>" . $row["Value_"] . "</td></td>" . $row["Holding"] . "</td></tr>"; //or just use "echo $row[0]"
     }
 
     echo "</table>";
@@ -416,8 +416,9 @@ function handleGETRequest() {
 
 if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['expensiveHouse']) || isset($_POST['selectSubmit']) || isset($_GET['profitableCrypto'])) {
+    } else if (isset($_GET['expensiveHouse']) || isset($_POST['selectSubmit'])) {
         handleGETRequest();
+        debugAlertMessage("GET handle");
     }
 ?>
 </body>
