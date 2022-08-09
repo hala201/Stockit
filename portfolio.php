@@ -319,7 +319,7 @@ function handleMostProfitableCryptoRequest() {
                                 HAVING COUNT(*)>1 ");
     
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "<br> These are the maximum profits from these popular cryptocurrencies " . $row[0] . "<br>";
+        echo "<br> These are the maximum profits from these popular cryptocurrencies " . $row[0] . " = " . $row[1] . "<br>";
     }
 }
 
@@ -345,6 +345,26 @@ function handleSelectRequest(){
     OCICommit($db_conn);
 }
 
+
+
+// function handleDivision() {
+//     global $db_conn;
+
+//     $portf = $_GET['']
+    
+//     $result = executeSQL("SELECT *
+//                            FROM ")
+
+
+
+
+
+
+
+// }
+
+
+
 function handleprojectJoinRequest(){
     global $db_conn;
     $sm_symbol = $_GET['smSymbol'];
@@ -357,7 +377,7 @@ function handleprojectJoinRequest(){
     echo "<tr><th>Value</th><th>Holding</th></tr>";
 
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "</td><td>" . $row["Value_"] . "</td></td>" . $row["Holding"] . "</td></tr>"; //or just use "echo $row[0]"
+        echo "</td><td>" . $row["Value_"] . "</td><td>" . $row["Holding"] . "</td></tr>"; //or just use "echo $row[0]"
     }
 
     echo "</table>";
@@ -402,7 +422,8 @@ function handleGETRequest() {
 
 if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['expensiveHouse']) || isset($_GET['selectSubmit']) || isset($_GET['projectJoinSubmit'])) {
+    } else if (isset($_GET['expensiveHouse']) || isset($_GET['selectSubmit']) || isset($_GET['profitableCrypto']) 
+    || isset($_GET['projectJoinSubmit'])) {
         debugAlertMessage("before GET handle");
         handleGETRequest();
         debugAlertMessage("GET handle");
