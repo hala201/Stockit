@@ -92,8 +92,8 @@
 
 <form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="deleteQueryRequest" name="deleteQueryRequest">
-    Email: <input type="text" name="Email" placeholder ="Old Name"> <br /><br />
-    SIN: <input type="text" name="SIN" placeholder = "New Name"> <br /><br />
+    Email: <input type="text" name="Email" placeholder ="Email"> <br /><br />
+    SIN: <input type="text" name="SIN" placeholder = "SIN"> <br /><br />
 
     <input type="submit" value="Delete" name="deleteSubmit"></p>
 </form>
