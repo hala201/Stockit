@@ -85,9 +85,8 @@ WHERE Field1 = :Var1 AND Field2 > :Var20 = Incorrect or missing
 
 <form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="selectQueryRequest" name="selectQueryRequest">
-    Min Buy Price: <input type="text" name="minPrice" placeholder ="minPrice"> <br /><br />
+    min Buy Price: <input type="text" name="minPrice" placeholder ="minPrice"> <br /><br />
     Max Buy Price: <input type="text" name="maxPrice" placeholder ="maxPrice"> <br /><br />
-    Portfolio: <input type="text" name="portfolio" placeholder ="portfolio"><br /><br />
 
     <input type="submit" value="select" name="selectSubmit" style="position:relative; left:35px;"></p>
 </form>
@@ -346,34 +345,16 @@ function handleSelectRequest(){
     OCICommit($db_conn);
 }
 
-
-function handleDivision() {
-    global $db_conn;
-
-    $portf = $_GET['']
-    
-    $result = executeSQL("SELECT *
-                           FROM ")
-
-
-
-
-
-
-
-}
-
-
 function handleprojectJoinRequest(){
     global $db_conn;
     $sm_symbol = $_GET['smSymbol'];
-
+    debugAlertMessage("executing join project");
     $result = executeSQL("SELECT Value_, Holding 
                             FROM Stock s, StockMarket sm
                             WHERE s.smSymbol = sm.Symbol AND sm.Symbol = '" . $sm_symbol . '"');
     echo "<br>Retrieved data from table Stock:<br>";
     echo "<table>";
-    echo "</th><th>Value_</th></tr>Holding</th></tr>";
+    echo "<tr><th>Value</th><th>Holding</th></tr>";
 
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
         echo "</td><td>" . $row["Value_"] . "</td></td>" . $row["Holding"] . "</td></tr>"; //or just use "echo $row[0]"
@@ -407,18 +388,21 @@ function handleGETRequest() {
         if(array_key_exists('selectQueryRequest', $_GET)) {
             debugAlertMessage("select running");
             handleSelectRequest();
+        } else if(array_key_exists('projectJoinQueryRequest', $_GET)) {
+            debugAlertMessage("join project");
+            handleprojectJoinRequest();
         } else if (array_key_exists('expensiveHouseRequest', $_GET)) {
             handleExpensiveHouseRequest();
         } else if(array_key_exists('profitableCryptoRequest', $_GET)) {
             handleMostProfitableCryptoRequest();
-        }
+        } 
         disconnectFromDB();
     }
 }
 
 if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['expensiveHouse']) || isset($_GET['selectSubmit'])) {
+    } else if (isset($_GET['expensiveHouse']) || isset($_GET['selectSubmit']) || isset($_GET['projectJoinSubmit'])) {
         debugAlertMessage("before GET handle");
         handleGETRequest();
         debugAlertMessage("GET handle");
