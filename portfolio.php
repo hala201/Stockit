@@ -117,11 +117,11 @@ in the WHERE clause (e.g. join the Customer and the Transaction table to
     <input type="hidden" id="projectJoinQueryRequest" name="projectJoinQueryRequest">
 
     choose stock market:<select name="smChoice"><br /><br />
-        <option value="AAPL">AAPL</option>
+        <option value="NASDAQ">NASDAQ</option>
         <option value="GOOG">GOOG</option>
         <option value="AMZ">AMZ</option>
         <option value="AMX">AMX</option>
-        <option value="NASDAQ">NASDAQ</option>
+        <option value="AAPL">AAPL</option>
     </select>
     confirm:<input type="text" name="stockMarketSymbol" placeholder ="stock market symbol"> <br /><br />
     <input type="submit" value="project" name="projectJoinSubmit"></p>
@@ -374,9 +374,11 @@ function handleprojectJoinRequest(){
     global $db_conn;
     $sm_symbol = $_GET['stockMarketSymbol'];
     debugAlertMessage("executing join project");
+    debugAlertMessage($sm_symbol);
     $result = executePlainSQL("SELECT Value_, Holding 
                         FROM StockMarket sm, Stock s 
                         WHERE s.smSymbol = sm.smSymbol AND sm.smSymbol='" . $sm_symbol ."'");
+                        debugAlertMessage($result);
     debugAlertMessage("finished sql query");
     echo "<br>Retrieved data from table Stock:<br>";
     echo "<table>";
