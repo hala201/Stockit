@@ -284,10 +284,10 @@ VALUES
 
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
-    ('NASDAQ', 'NY USA');
+    ('AMZ', 'NY USA');
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
-    ('AMZ', 'NY USA');
+    ('NASDAQ', 'NY USA');
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
     ('AMX', 'ON Canada');
