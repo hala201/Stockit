@@ -111,19 +111,22 @@ in the WHERE clause (e.g. join the Customer and the Transaction table to
 
 <h2 style="text-align: center;">Choose a stock market</h2>
 <p style="text-align: center;">find the value, and holding of stocks with the following stock market symbol</p>
+<p style="text-align: center;">input stock market symbol from below</p>
 
 <form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="projectJoinQueryRequest" name="projectJoinQueryRequest">
-    stock market: <select name="smSymbol"><br /><br />
+    stock market:<select name="smChoice"><br /><br />
         <option value="AAPL">AAPL</option>
         <option value="GOOG">GOOG</option>
         <option value="AMZ">AMZ</option>
         <option value="AMX">AMX</option>
-        <option value="NASDQ">NASDQ</option>
+        <option value="NASDAQ">NASDAQ</option>
     </select>
-
-
     <input type="submit" value="project" name="projectJoinSubmit"></p>
+
+
+
+    
 </form>
 
 <hr />
@@ -369,18 +372,20 @@ function handleprojectJoinRequest(){
     global $db_conn;
     $sm_symbol = $_GET['smSymbol'];
     debugAlertMessage("executing join project");
-    $result = executeSQL("SELECT Value_, Holding 
-                            FROM Stock s, StockMarket sm
-                            WHERE s.smSymbol = sm.Symbol AND sm.Symbol = '" . $sm_symbol . '"');
+    $result = executePlainSQL("SELECT Value_, Holding 
+                        FROM StockMarket sm, Stock s 
+                        WHERE s.smSymbol = sm.smSymbol");
+    debugAlertMessage("finished sql query");
     echo "<br>Retrieved data from table Stock:<br>";
     echo "<table>";
     echo "<tr><th>Value</th><th>Holding</th></tr>";
 
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "</td><td>" . $row["Value_"] . "</td><td>" . $row["Holding"] . "</td></tr>"; //or just use "echo $row[0]"
+        echo "</td><td>" . $row["VALUE_"] . "</td><td>" . $row["HOLDING"] . "</td></tr>"; //or just use "echo $row[0]"
     }
 
     echo "</table>";
+    debugAlertMessage("finished printing table");
     
         //echo "<br> The following rows match your search: " . $selection . "<br>";
     OCICommit($db_conn);
