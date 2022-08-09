@@ -78,8 +78,6 @@
 
 <form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-    Old Email: <input type="text" name="newEmail" placeholder ="Old Email"> <br /><br />
-    New Email: <input type="text" name="newEmail" placeholder ="New Email"> <br /><br />
     Old Name: <input type="text" name="oldName" placeholder ="Old Name"> <br /><br />
     New Name: <input type="text" name="newName" placeholder ="New Name"> <br /><br />
 
@@ -228,11 +226,8 @@ function handleUpdateRequest() {
     global $db_conn;
 
     $old_name = $_POST['oldName'];
-    $new_name = $_POST['newName'];
-    $old_email = $_POST['oldEmail'];
-    $new_email = $_POST['newEmail'];    // you need the wrap the old name and new name values with single quotations
+    $new_name = $_POST['newName'];  // you need the wrap the old name and new name values with single quotations
     executePlainSQL("UPDATE User_ SET Name_='" . $new_name . "' WHERE Name_='" . $old_name . "'");
-    executePlainSQL("UPDATE User_ SET EmailID ='" . $new_email ."' WHERE EmailID='" . $old_email ."'");
     $result = executePlainSQL("SELECT * FROM User_");
     echo "<br>Current Users:<br>";
     echo "<table>";
