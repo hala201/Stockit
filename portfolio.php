@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 </head>
-
+<!--
 <style>
   body {
     background-image: url("https://media.istockphoto.com/photos/graphs-and-charts-picture-id463803535?k=20&m=463803535&s=612x612&w=0&h=eBbkumP9Hm11XjYiGyhrxtBU2amXQ2z_vMYBdleQSlc=");
@@ -32,6 +32,7 @@
     background-size: cover;
   }
 </style>
+-->
 
 <body>
 <h2 style="text-align: center;">Reset</h2>
@@ -84,8 +85,9 @@ WHERE Field1 = :Var1 AND Field2 > :Var20 = Incorrect or missing
 
 <form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="selectQueryRequest" name="selectQueryRequest">
-    min Buy Price: <input type="text" name="minPrice" placeholder ="minPrice"> <br /><br />
+    Min Buy Price: <input type="text" name="minPrice" placeholder ="minPrice"> <br /><br />
     Max Buy Price: <input type="text" name="maxPrice" placeholder ="maxPrice"> <br /><br />
+    Portfolio: <input type="text" name="portfolio" placeholder ="portfolio"><br /><br />
 
     <input type="submit" value="select" name="selectSubmit" style="position:relative; left:35px;"></p>
 </form>
@@ -146,7 +148,7 @@ in the WHERE clause (e.g. join the Customer and the Transaction table to
 
 $success = True; //keep track of errors so it redirects the page only if there are no errors
 $db_conn = NULL; // edit the login credentials in connectToDB()
-$show_debug_alert_messages = False; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
+$show_debug_alert_messages = True; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
 
 function debugAlertMessage($message) {
     global $show_debug_alert_messages;
@@ -327,15 +329,15 @@ function handleSelectRequest(){
     $min_price = $_GET['minPrice'];
     $max_price = $_GET['maxPrice'];
 
-    $result = executeSQL("SELECT * 
+    $result = executePlainSQL("SELECT * 
                             FROM RealEstate
-                            WHERE BuyPrice >='" . $min_price . "' AND BuyPrice =<' " . $max_price . "'");
+                            WHERE BuyPrice > $min_price AND BuyPrice < $max_price");
     echo "<br>Retrieved data from table Portfolio:<br>";
     echo "<table>";
-    echo "<tr><th>Address_</th><th>BuyPrice</th></tr>Value_</th></tr>Type_</th></tr>ID</th></tr>";
+    echo "<tr><th>Address</th><th>BuyPrice</th><th>Value</th><th>Type</th><th>ID</th></tr>";
 
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "<tr><td>" . $row["Address_"] . "</td><td>" . $row["BuyPrice"] . "</td></tr>" . $row["Value_"] . "</td></tr>" . $row["Type_"] . "</td></tr>" . $row["ID"] . "</td></tr>"; //or just use "echo $row[0]"
+        echo "<tr><td>" . $row["ADDRESS_"] . "</td><td>" . $row["BUYPRICE"] . "</td><td>" . $row["VALUE_"] . "</td><td>" . $row["TYPE_"] . "</td><td>" . $row["ID"] . "</td></tr>"; //or just use "echo $row[0]"
     }
 
     echo "</table>";
@@ -343,6 +345,24 @@ function handleSelectRequest(){
         //echo "<br> The following rows match your search: " . $selection . "<br>";
     OCICommit($db_conn);
 }
+
+
+function handleDivision() {
+    global $db_conn;
+
+    $portf = $_GET['']
+    
+    $result = executeSQL("SELECT *
+                           FROM ")
+
+
+
+
+
+
+
+}
+
 
 function handleprojectJoinRequest(){
     global $db_conn;
@@ -356,7 +376,7 @@ function handleprojectJoinRequest(){
     echo "</th><th>Value_</th></tr>Holding</th></tr>";
 
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "</td><td>" . $row["Value_"] . "</td></tr>" . $row["Holding"] . "</td></tr>"; //or just use "echo $row[0]"
+        echo "</td><td>" . $row["Value_"] . "</td></td>" . $row["Holding"] . "</td></tr>"; //or just use "echo $row[0]"
     }
 
     echo "</table>";
@@ -384,10 +404,11 @@ function handlePOSTRequest() {
 // A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
 function handleGETRequest() {
     if (connectToDB()) {
-        if (array_key_exists('expensiveHouseRequest', $_GET)) {
-            handleExpensiveHouseRequest();
-        } else if(array_key_exists('selectQueryRequest', $_GET)) {
+        if(array_key_exists('selectQueryRequest', $_GET)) {
+            debugAlertMessage("select running");
             handleSelectRequest();
+        } else if (array_key_exists('expensiveHouseRequest', $_GET)) {
+            handleExpensiveHouseRequest();
         } else if(array_key_exists('profitableCryptoRequest', $_GET)) {
             handleMostProfitableCryptoRequest();
         }
@@ -397,8 +418,10 @@ function handleGETRequest() {
 
 if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['expensiveHouse']) || isset($_POST['selectSubmit']) || isset($_GET['profitableCrypto'])) {
+    } else if (isset($_GET['expensiveHouse']) || isset($_GET['selectSubmit'])) {
+        debugAlertMessage("before GET handle");
         handleGETRequest();
+        debugAlertMessage("GET handle");
     }
 ?>
 </body>
