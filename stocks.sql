@@ -329,7 +329,7 @@ VALUES
 INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
     ('GOOGL' , 'EWER1234567890', 1800, 300, 4800, 3000, 'Alphabet', 'AMZ');
-INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
+INSERT INTO Stock (Symbol, AccountNumber, Price, HoldiSELECng, Value_, Profit, Name_, smSymbol)
 VALUES
     ('APL' , 'RWER1234567890', 4000, 200, 6400, 2400, 'Apple', 'NASDAQ');
 INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
