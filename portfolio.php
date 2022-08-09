@@ -14,12 +14,24 @@
   To get the file to work, you must place it somewhere where your
   Apache server can run it, and you must rename it to have a ".php"
   extension.  You must also change the username and password on the
-  OCILogon below to be your ORACLE username and password -->
+  OCILogon below to be your ORACLE username and password   -->
 
 <html>
 <head>
     <title>Investment Portfolio</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 </head>
+
+<style>
+  body {
+    background-image: url("https://media.istockphoto.com/photos/graphs-and-charts-picture-id463803535?k=20&m=463803535&s=612x612&w=0&h=eBbkumP9Hm11XjYiGyhrxtBU2amXQ2z_vMYBdleQSlc=");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+</style>
 
 <body>
 <h2 style="text-align: center;">Reset</h2>
@@ -28,7 +40,7 @@
 <form method="POST" action="portfolio.php" style="text-align: center;">
     <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
     <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
-    <p><input type="submit" value="Reset" name="reset"></p>
+    <p><input type="submit" value="Reset" name="reset" style="position:relative; left:30px;"></p>
 </form>
 
 <hr />
@@ -36,11 +48,11 @@
 <h2 style="text-align: center;">Insert Values into Portfolio</h2>
 <form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-    ID: <input type="text" name="id" placeholder ="ID" style="position:relative; left:22px;"> <br /><br />
-    Net Worth: <input type="text" name="networth" placeholder ="Net Worth"> <br /><br />
-    Email ID: <input type="text" name="email" placeholder ="Email ID"> <br /><br />
+    ID: <input type="text" name="id" placeholder ="ID" style="position:relative; left:35px;"> <br /><br />
+    Net Worth: <input type="text" name="networth" placeholder ="Net Worth" style="position:relative; left:9px;"> <br /><br />
+    Email ID: <input type="text" name="email" placeholder ="Email ID" style="position:relative; left:19px;"> <br /><br />
 
-    <input type="submit" value="Insert" name="insertSubmit"></p>
+    <input type="submit" value="Insert" name="insertSubmit" style="position:relative; left:35px;"></p>
 </form>
 
 <hr />
@@ -50,10 +62,10 @@
 
 <form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-    Email ID: <input type="text" name="emailUpdate" placeholder ="Email ID"> <br /><br />
+    Email ID: <input type="text" name="emailUpdate" placeholder ="Email ID" style="position:relative; left:24px;"> <br /><br />
     New Net Worth: <input type="text" name="newNetworth" placeholder ="New Net Worth"> <br /><br />
 
-    <input type="submit" value="Update" name="updateSubmit"></p>
+    <input type="submit" value="Update" name="updateSubmit" style="position:relative; left:35px;"></p>
 </form>
 <!-- 
     SELECTION
@@ -75,7 +87,7 @@ WHERE Field1 = :Var1 AND Field2 > :Var20 = Incorrect or missing
     min Buy Price: <input type="text" name="minPrice" placeholder ="minPrice"> <br /><br />
     Max Buy Price: <input type="text" name="maxPrice" placeholder ="maxPrice"> <br /><br />
 
-    <input type="submit" value="select" name="selectSubmit"></p>
+    <input type="submit" value="select" name="selectSubmit" style="position:relative; left:35px;"></p>
 </form>
 
 <!--
@@ -121,15 +133,13 @@ in the WHERE clause (e.g. join the Customer and the Transaction table to
     <input type="submit" name="expensiveHouse"></p>
 </form>
 
-<h2 style="text-align: center;">Check Portfolio Net Worth</h2>
+<hr />
+
+<h2 style="text-align: center;">Find The Most Profitable Crypto</h2>
 <form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
-    <input type="hidden" id="networthRequest" name="networthRequest">
-    <input type="submit" name="networth"></p>
+    <input type="hidden" id="profitableCryptoRequest" name="profitableCryptoRequest">
+    <input type="submit" name="profitableCrypto"></p>
 </form>
-
-
-
-
 
 <?php
 //this tells the system that it's no longer just parsing html; it's now parsing PHP
@@ -289,12 +299,26 @@ function handleExpensiveHouseRequest() {
 
     $result = executePlainSQL(" SELECT Address_, MAX(Value_), Type_ 
                                 FROM RealEstate 
-                                WHERE Value_>=4500 
+                                WHERE Value_>5000000
                                 GROUP BY Address_, Type_ 
                                 HAVING Type_='Residential' ");
     
-    if(($row = oci_fetch_row($result)) != false) {
-        echo "<br> The following rows match your search: " . $row[0] . "<br>";
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        echo "<br> These are the most expensive residential properties: " . $row[0] . "<br>";
+    }
+}
+
+function handleMostProfitableCryptoRequest() {
+    global $db_conn;
+
+    $result = executePlainSQL(" SELECT Symbol, MAX(Profit) 
+                                FROM Crypto 
+                                WHERE Profit>0 
+                                GROUP BY Symbol 
+                                HAVING COUNT(*)>1 ");
+    
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        echo "<br> These are the maximum profits from these popular cryptocurrencies " . $row[0] . "<br>";
     }
 }
 
@@ -360,12 +384,12 @@ function handlePOSTRequest() {
 // A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
 function handleGETRequest() {
     if (connectToDB()) {
-        // if (array_key_exists('expensiveHouseRequest', $_GET)) {
-        //     debugAlertMessage("expensive request");
-        //     handleExpensiveHouseRequest();
-        if(array_key_exists('selectQueryRequest', $_GET)) {
-            debugAlertMessage("select request");
+        if (array_key_exists('expensiveHouseRequest', $_GET)) {
+            handleExpensiveHouseRequest();
+        } else if(array_key_exists('selectQueryRequest', $_GET)) {
             handleSelectRequest();
+        } else if(array_key_exists('profitableCryptoRequest', $_GET)) {
+            handleMostProfitableCryptoRequest();
         }
         disconnectFromDB();
     }
@@ -373,8 +397,7 @@ function handleGETRequest() {
 
 if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
         handlePOSTRequest();
-        debugAlertMessage("POST handle");
-    } else if (isset($_GET['expensiveHouse']) || isset($_GET['selectSubmit'])) {
+    } else if (isset($_GET['expensiveHouse']) || isset($_POST['selectSubmit'])) {
         handleGETRequest();
         debugAlertMessage("GET handle");
     }
