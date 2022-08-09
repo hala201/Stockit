@@ -318,7 +318,7 @@ function handleMostProfitableCryptoRequest() {
                                 HAVING COUNT(*)>1 ");
     
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "<br> These are the maximum profits from these popular cryptocurrencies " . $row[0] . "<br>";
+        echo "<br> These are the maximum profits from these popular cryptocurrencies " . $row[0] . " = " . $row[1] . "<br>";
     }
 }
 
