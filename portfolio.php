@@ -115,13 +115,15 @@ in the WHERE clause (e.g. join the Customer and the Transaction table to
 
 <form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="projectJoinQueryRequest" name="projectJoinQueryRequest">
-    stock market:<select name="smChoice"><br /><br />
+
+    choose stock market:<select name="smChoice"><br /><br />
         <option value="AAPL">AAPL</option>
         <option value="GOOG">GOOG</option>
         <option value="AMZ">AMZ</option>
         <option value="AMX">AMX</option>
         <option value="NASDAQ">NASDAQ</option>
     </select>
+    confirm:<input type="text" name="stockMarketSymbol" placeholder ="stock market symbol"> <br /><br />
     <input type="submit" value="project" name="projectJoinSubmit"></p>
 
 
@@ -370,11 +372,11 @@ function handleSelectRequest(){
 
 function handleprojectJoinRequest(){
     global $db_conn;
-    $sm_symbol = $_GET['smSymbol'];
+    $sm_symbol = $_GET['stockMarketSymbol'];
     debugAlertMessage("executing join project");
     $result = executePlainSQL("SELECT Value_, Holding 
                         FROM StockMarket sm, Stock s 
-                        WHERE s.smSymbol = sm.smSymbol");
+                        WHERE s.smSymbol = sm.smSymbol AND sm.smSymbol='" . $sm_symbol ."'");
     debugAlertMessage("finished sql query");
     echo "<br>Retrieved data from table Stock:<br>";
     echo "<table>";

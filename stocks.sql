@@ -284,16 +284,16 @@ VALUES
 
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
-    ('AAPL', 'NY USA');
+    ('NASDAQ', 'NY USA');
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
-    ('AMZ,', 'NY USA');
+    ('AMZ', 'NY USA');
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
     ('AMX', 'ON Canada');
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
-    ('NASDQ', 'MH India');
+    ('AAPL', 'MH India');
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
     ('GOOG', 'LD UK');
@@ -322,7 +322,7 @@ VALUES
 
 INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
-    ('WAYNE' , 'QWER1234567890', 10000, 500, 200000, 190000, 'Wayne', 'AAPL');
+    ('WAYNE' , 'QWER1234567890', 10000, 500, 200000, 190000, 'Wayne', 'NASDAQ');
 INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
     ('STAR' , 'WWER1234567890', 2750, 400, 7500, 4750, 'Star Labs', 'AMX');
@@ -331,7 +331,7 @@ VALUES
     ('GOOGL' , 'EWER1234567890', 1800, 300, 4800, 3000, 'Alphabet', 'AMZ');
 INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
-    ('APL' , 'RWER1234567890', 4000, 200, 6400, 2400, 'Apple', 'NASDAQ');
+    ('APL' , 'RWER1234567890', 4000, 200, 6400, 2400, 'Apple', 'AAPL');
 INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
     ('MSFT' , 'TWER1234567890', 4500, 100, 8100, 3600, 'Microsoft', 'NASDAQ');
