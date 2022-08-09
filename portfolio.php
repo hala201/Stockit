@@ -110,18 +110,19 @@ in the WHERE clause (e.g. join the Customer and the Transaction table to
 <hr />
 
 <h2 style="text-align: center;">Choose a stock market</h2>
-<p style="text-align: center;">find the value, and holding of stocks with the following stock market symbol</p>
-<p style="text-align: center;">input stock market symbol from below</p>
+<p style="text-align: center;">find the value, and holding of stocks with the following stock market head quarters</p>
+<p style="text-align: center;">input stock market headquarters from below</p>
 
 <form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="projectJoinQueryRequest" name="projectJoinQueryRequest">
-    stock market:<select name="smChoice"><br /><br />
-        <option value="AAPL">AAPL</option>
-        <option value="GOOG">GOOG</option>
-        <option value="AMZ">AMZ</option>
-        <option value="AMX">AMX</option>
-        <option value="NASDAQ">NASDAQ</option>
+
+    choose stock market:<select name="smChoice"><br /><br />
+        <option value="NY USA">NY USA</option>
+        <option value="ON Canada">ON Canada</option>
+        <option value="MH India">MH India</option>
+        <option value="LD UK">LD UK</option>
     </select>
+    confirm:<input type="text" name="stockMarketHQ" placeholder ="stock market head quarters"> <br /><br />
     <input type="submit" value="project" name="projectJoinSubmit"></p>
 
 
@@ -355,11 +356,13 @@ function handleSelectRequest(){
 
 function handleprojectJoinRequest(){
     global $db_conn;
-    $sm_symbol = $_GET['smSymbol'];
+    $sm_symbol = $_GET['stockMarketHQ'];
     debugAlertMessage("executing join project");
+    debugAlertMessage($sm_symbol);
     $result = executePlainSQL("SELECT Value_, Holding 
                         FROM StockMarket sm, Stock s 
-                        WHERE s.smSymbol = sm.smSymbol");
+                        WHERE s.smSymbol = sm.smSymbol AND sm.Headquarters='" . $sm_symbol ."'");
+                        debugAlertMessage($result);
     debugAlertMessage("finished sql query");
     echo "<br>Retrieved data from table Stock:<br>";
     echo "<table>";
@@ -370,6 +373,7 @@ function handleprojectJoinRequest(){
     }
 
     echo "</table>";
+
     debugAlertMessage("finished printing table");
     
         //echo "<br> The following rows match your search: " . $selection . "<br>";

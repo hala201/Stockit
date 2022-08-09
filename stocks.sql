@@ -15,7 +15,7 @@ drop table StockMarket CASCADE CONSTRAINTS;
 CREATE TABLE User_(
 SIN_ INT,
 Name_ CHAR(50),
-DOB DATE,
+DOB CHAR(50),
 EmailID CHAR(50),
 PRIMARY KEY(EmailID)
 );
@@ -121,19 +121,19 @@ PRIMARY KEY (Symbol, AccountNumber)
 
 INSERT INTO User_(SIN_, Name_, DOB, EmailID)
 VALUES
-    (123456789, 'Bruce Wayne', to_date('2000-01-01', 'yyyy-mm-dd'), 'bq@gmail.com');
+    (123456789, 'Bruce Wayne', '40', 'bq@gmail.com');
 INSERT INTO User_(SIN_, Name_, DOB, EmailID)
 VALUES
-    (987654321, 'Jack Napier', to_date('2000-02-01', 'yyyy-mm-dd'), 'jn@gmail.com');
+    (987654321, 'Jack Napier', '50', 'jn@gmail.com');
 INSERT INTO User_(SIN_, Name_, DOB, EmailID)
 VALUES
-    (135792468, 'Peter Parker', to_date('2000-03-01', 'yyyy-mm-dd'), 'pp@gmail.com');
+    (135792468, 'Peter Parker', '30', 'pp@gmail.com');
 INSERT INTO User_(SIN_, Name_, DOB, EmailID)
 VALUES
-    (246813579, 'Gangandhar Sharstri', to_date('2000-04-01', 'yyyy-mm-dd'), 'gs@gmail.com');
+    (246813579, 'Gangandhar Sharstri', '20', 'gs@gmail.com');
 INSERT INTO User_(SIN_, Name_, DOB, EmailID)
 VALUES
-    (192837456, 'Barry Allen', to_date('2000-05-01', 'yyyy-mm-dd'), 'ba@gmail.com');
+    (192837456, 'Barry Allen', '10', 'ba@gmail.com');
 
 
 INSERT INTO Portfolio (ID, NetWorth, EmailID)
@@ -284,7 +284,7 @@ VALUES
 
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
-    ('NYSE', 'NY USA');
+    ('AMZ', 'NY USA');
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
     ('NASDAQ', 'NY USA');
@@ -293,7 +293,7 @@ VALUES
     ('TSX', 'ON Canada');
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
-    ('NSE', 'MH India');
+    ('AAPL', 'MH India');
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
     ('LSE', 'LD UK');
@@ -322,7 +322,7 @@ VALUES
 
 INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
-    ('WAYNE' , 'QWER1234567890', 10000, 500, 200000, 190000, 'Wayne', 'NYSE');
+    ('WAYNE' , 'QWER1234567890', 10000, 500, 200000, 190000, 'Wayne', 'NASDAQ');
 INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
     ('STAR' , 'WWER1234567890', 2750, 400, 7500, 4750, 'Star Labs', 'NYSE');
@@ -331,7 +331,7 @@ VALUES
     ('GOOGL' , 'EWER1234567890', 1800, 300, 4800, 3000, 'Alphabet', 'NASDAQ');
 INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
-    ('APL' , 'RWER1234567890', 4000, 200, 6400, 2400, 'Apple', 'NASDAQ');
+    ('APL' , 'RWER1234567890', 4000, 200, 6400, 2400, 'Apple', 'AAPL');
 INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
     ('MSFT' , 'TWER1234567890', 4500, 100, 8100, 3600, 'Microsoft', 'NASDAQ');

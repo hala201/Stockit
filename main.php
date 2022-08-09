@@ -23,7 +23,7 @@
 
 </head>
 
-
+<!--
 <style>
   body {
     background-image: url("https://static.vecteezy.com/system/resources/previews/005/084/691/original/businessman-worried-about-stock-market-volatility-he-was-reluctant-to-buy-or-sell-in-this-situation-free-vector.jpg");
@@ -33,6 +33,7 @@
     background-size: cover;
   }
 </style>
+-->
 
 <body>
 <h2 style="text-align: center;">Start-Session</h2>
@@ -58,9 +59,9 @@
 <form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
     SIN: <input type="text" name="sin" placeholder ="SIN" style="position:relative; left:9px;"> <br /><br />
-    Name: <input type="text" name="Name" placeholder ="Name"> <br /><br />
+    Name: <input type="text" name="name" placeholder ="Name"> <br /><br />
     Email: <input type="email" name="email" placeholder ="Email"> <br /><br />
-    Age: <input type="date" name="dob" placeholder ="Age" placeholder ="SIN" style="position:relative; left:7px;width:12%;"> <br /><br />
+    Age: <input type="text" name="dob" placeholder ="Age" placeholder ="age" style="position:relative; left:7px;width:12%;"> <br /><br />
 
     <input type="submit" value="Insert" name="insertSubmit"></p>
 </form>
@@ -77,9 +78,6 @@
 
 <form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-    SIN: <input type="text" name="currentSIN" placeholder="SIN" placeholder ="SIN" style="position:relative; left:19px;"> <br /><br />
-    Old Email: <input type="text" name="newEmail" placeholder ="Old Email"> <br /><br />
-    New Email: <input type="text" name="newEmail" placeholder ="New Email"> <br /><br />
     Old Name: <input type="text" name="oldName" placeholder ="Old Name"> <br /><br />
     New Name: <input type="text" name="newName" placeholder ="New Name"> <br /><br />
 
@@ -94,10 +92,8 @@
 
 <form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="deleteQueryRequest" name="deleteQueryRequest">
-    Old Name: <input type="text" name="oldName" placeholder ="Old Name"> <br /><br />
-    New Name: <input type="text" name="newName" placeholder = "New Name"> <br /><br />
-    Old Email: <input type="text" name="newEmail" placeholder ="Old Email"> <br /><br />
-    New Email: <input type="text" name="newEmail" placeholder = "New Email"> <br /><br />
+    Email: <input type="text" name="Email" placeholder ="Old Name"> <br /><br />
+    SIN: <input type="text" name="SIN" placeholder = "New Name"> <br /><br />
 
     <input type="submit" value="Delete" name="deleteSubmit"></p>
 </form>
@@ -230,14 +226,18 @@ function handleUpdateRequest() {
     global $db_conn;
 
     $old_name = $_POST['oldName'];
-    $new_name = $_POST['newName'];
-    $old_email = $_POST['oldEmail'];
-    $new_email = $_POST['newEmail'];
-    $curr_sin = $_POST['currentSIN'];
-    // you need the wrap the old name and new name values with single quotations
+    $new_name = $_POST['newName'];  // you need the wrap the old name and new name values with single quotations
     executePlainSQL("UPDATE User_ SET Name_='" . $new_name . "' WHERE Name_='" . $old_name . "'");
-   // executePlainSQL("UPDATE User_ SET Email='" . $new_email . "' WHERE EmailID='" . $old_email . "'");
-    executePlainSQL("UPDATE User_ SET Email ='" . $new_email ."' WHERE SIN_ ='" . $curr_sin ."' AND EmailID='" . $old_email ."'");
+    $result = executePlainSQL("SELECT * FROM User_");
+    echo "<br>Current Users:<br>";
+    echo "<table>";
+    echo "<tr><th> SIN </th><th> Name </th><th> DOB </th>'<th> Email </th></tr>";
+
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        echo "<tr><td>" . $row["SIN_"] . "</td><td>" . $row["NAME_"] . "</td><td>" . $row["DOB"] . "</td><td>" . $row["EMAILID"] .  "</td></tr>"; //or just use "echo $row[0]"
+    }
+
+    echo "</table>";
     OCICommit($db_conn);
 }
 
@@ -274,10 +274,11 @@ function handleInsertRequest() {
     //Getting the values from user and insert data into the table
     $tuple = array (
         ":bind1" => $_POST['sin'],
-        ":bind2" => $_POST['insName'],
-        ":bind3" => $_POST[date('dob')],
+        ":bind2" => $_POST['name'],
+        ":bind3" => $_POST['dob'],
         ":bind4" => $_POST['email']
     );
+    debugAlertMessage(date('Y-m-d', strtotime($_POST[date('dob')])));
 
     $alltuples = array (
         $tuple
