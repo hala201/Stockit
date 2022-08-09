@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 </head>
-
+<!--
 <style>
   body {
     background-image: url("https://media.istockphoto.com/photos/graphs-and-charts-picture-id463803535?k=20&m=463803535&s=612x612&w=0&h=eBbkumP9Hm11XjYiGyhrxtBU2amXQ2z_vMYBdleQSlc=");
@@ -32,6 +32,7 @@
     background-size: cover;
   }
 </style>
+-->
 
 <body>
 <h2 style="text-align: center;">Reset</h2>
@@ -384,10 +385,11 @@ function handlePOSTRequest() {
 // A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
 function handleGETRequest() {
     if (connectToDB()) {
-        if (array_key_exists('expensiveHouseRequest', $_GET)) {
-            handleExpensiveHouseRequest();
-        } else if(array_key_exists('selectQueryRequest', $_GET)) {
+        if(array_key_exists('selectQueryRequest', $_GET)) {
+            debugAlertMessage("select running");
             handleSelectRequest();
+        } else if (array_key_exists('expensiveHouseRequest', $_GET)) {
+            handleExpensiveHouseRequest();
         } else if(array_key_exists('profitableCryptoRequest', $_GET)) {
             handleMostProfitableCryptoRequest();
         }
@@ -397,7 +399,8 @@ function handleGETRequest() {
 
 if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['expensiveHouse']) || isset($_POST['selectSubmit'])) {
+    } else if (isset($_GET['expensiveHouse']) || isset($_GET['selectSubmit'])) {
+        debugAlertMessage("before GET handle");
         handleGETRequest();
         debugAlertMessage("GET handle");
     }
