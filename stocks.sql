@@ -15,7 +15,7 @@ drop table StockMarket CASCADE CONSTRAINTS;
 CREATE TABLE User_(
 SIN_ INT,
 Name_ CHAR(50),
-DOB DATE,
+DOB CHAR(50),
 EmailID CHAR(50),
 PRIMARY KEY(EmailID)
 );
@@ -121,19 +121,19 @@ PRIMARY KEY (Symbol, AccountNumber)
 
 INSERT INTO User_(SIN_, Name_, DOB, EmailID)
 VALUES
-    (123456789, 'Bruce Wayne', to_date('2000-01-01', 'yyyy-mm-dd'), 'bq@gmail.com');
+    (123456789, 'Bruce Wayne', '40', 'bq@gmail.com');
 INSERT INTO User_(SIN_, Name_, DOB, EmailID)
 VALUES
-    (987654321, 'Jack Napier', to_date('2000-02-01', 'yyyy-mm-dd'), 'jn@gmail.com');
+    (987654321, 'Jack Napier', '50', 'jn@gmail.com');
 INSERT INTO User_(SIN_, Name_, DOB, EmailID)
 VALUES
-    (135792468, 'Peter Parker', to_date('2000-03-01', 'yyyy-mm-dd'), 'pp@gmail.com');
+    (135792468, 'Peter Parker', '30', 'pp@gmail.com');
 INSERT INTO User_(SIN_, Name_, DOB, EmailID)
 VALUES
-    (246813579, 'Gangandhar Sharstri', to_date('2000-04-01', 'yyyy-mm-dd'), 'gs@gmail.com');
+    (246813579, 'Gangandhar Sharstri', '20', 'gs@gmail.com');
 INSERT INTO User_(SIN_, Name_, DOB, EmailID)
 VALUES
-    (192837456, 'Barry Allen', to_date('2000-05-01', 'yyyy-mm-dd'), 'ba@gmail.com');
+    (192837456, 'Barry Allen', '10', 'ba@gmail.com');
 
 
 INSERT INTO Portfolio (ID, NetWorth, EmailID)

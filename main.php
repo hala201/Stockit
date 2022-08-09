@@ -59,9 +59,9 @@
 <form method="POST" action="main.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
     SIN: <input type="text" name="sin" placeholder ="SIN" style="position:relative; left:9px;"> <br /><br />
-    Name: <input type="text" name="Name" placeholder ="Name"> <br /><br />
+    Name: <input type="text" name="name" placeholder ="Name"> <br /><br />
     Email: <input type="email" name="email" placeholder ="Email"> <br /><br />
-    Age: <input type="date" name="dob" placeholder ="Age" placeholder ="SIN" style="position:relative; left:7px;width:12%;"> <br /><br />
+    Age: <input type="text" name="dob" placeholder ="Age" placeholder ="age" style="position:relative; left:7px;width:12%;"> <br /><br />
 
     <input type="submit" value="Insert" name="insertSubmit"></p>
 </form>
@@ -274,10 +274,11 @@ function handleInsertRequest() {
     //Getting the values from user and insert data into the table
     $tuple = array (
         ":bind1" => $_POST['sin'],
-        ":bind2" => $_POST['insName'],
-        ":bind3" => $_POST[date('dob')],
+        ":bind2" => $_POST['name'],
+        ":bind3" => $_POST['dob'],
         ":bind4" => $_POST['email']
     );
+    debugAlertMessage(date('Y-m-d', strtotime($_POST[date('dob')])));
 
     $alltuples = array (
         $tuple
