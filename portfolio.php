@@ -84,8 +84,9 @@ WHERE Field1 = :Var1 AND Field2 > :Var20 = Incorrect or missing
 
 <form method="GET" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
     <input type="hidden" id="selectQueryRequest" name="selectQueryRequest">
-    min Buy Price: <input type="text" name="minPrice" placeholder ="minPrice"> <br /><br />
+    Min Buy Price: <input type="text" name="minPrice" placeholder ="minPrice"> <br /><br />
     Max Buy Price: <input type="text" name="maxPrice" placeholder ="maxPrice"> <br /><br />
+    Portfolio: <input type="text" name="portfolio" placeholder ="portfolio"><br /><br />
 
     <input type="submit" value="select" name="selectSubmit" style="position:relative; left:35px;"></p>
 </form>
@@ -343,6 +344,24 @@ function handleSelectRequest(){
         //echo "<br> The following rows match your search: " . $selection . "<br>";
     OCICommit($db_conn);
 }
+
+
+function handleDivision() {
+    global $db_conn;
+
+    $portf = $_GET['']
+    
+    $result = executeSQL("SELECT *
+                           FROM ")
+
+
+
+
+
+
+
+}
+
 
 function handleprojectJoinRequest(){
     global $db_conn;
