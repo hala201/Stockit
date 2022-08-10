@@ -43,11 +43,11 @@
     <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
     <p><input type="submit" value="Reset" name="reset" style="position:relative; left:30px;"></p>
 </form>
-
+<!--
 <hr />
 
 <h2 style="text-align: center;">Insert Values into Portfolio</h2>
-<form method="POST" action="portfolio.php" style="text-align: center;"> <!--refresh page when submitted-->
+<form method="POST" action="portfolio.php" style="text-align: center;"> 
     <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
     ID: <input type="text" name="id" placeholder ="ID" style="position:relative; left:35px;"> <br /><br />
     Net Worth: <input type="text" name="networth" placeholder ="Net Worth" style="position:relative; left:9px;"> <br /><br />
@@ -55,6 +55,7 @@
 
     <input type="submit" value="Insert" name="insertSubmit" style="position:relative; left:35px;"></p>
 </form>
+-->
 
 <hr />
 
@@ -151,7 +152,7 @@ in the WHERE clause (e.g. join the Customer and the Transaction table to
 
 $success = True; //keep track of errors so it redirects the page only if there are no errors
 $db_conn = NULL; // edit the login credentials in connectToDB()
-$show_debug_alert_messages = True; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
+$show_debug_alert_messages = False; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
 
 function debugAlertMessage($message) {
     global $show_debug_alert_messages;
@@ -272,7 +273,7 @@ function handleUpdateRequest() {
 
 function handleResetRequest() {
     global $db_conn;
-    $sql = file_get_contents('stocks.sql');
+    $sql = trim(file_get_contents('stocks.sql'));
     $delimiter = ';';
     $commands = explode($delimiter, $sql);
     foreach ($commands as $command) {
