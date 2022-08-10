@@ -300,6 +300,29 @@ function handleInsertRequest() {
     OCICommit($db_conn);
 }
 
+
+// function handleDivision() {
+
+//     global $db_conn;
+//     $result = SELECT Name
+//     FROM Company 
+//     WHERE NOT EXISTS
+//     (   SELECT Name
+//         FROM Stock
+//         GROUP BY Name
+//         EXCEPT
+//         (
+//             SELECT Stock.Name
+//             FROM Stock, Company
+//             WHERE Company.Name = Stock.Name
+//         )
+//     )
+
+//     while($row =OCI_Fetch_Array($result, OCI_BOTH)) {
+//         echo "<br>This company has all the stocks<br>";
+//     }
+// }
+
 function handleExpensiveHouseRequest() {
     global $db_conn;
 
@@ -352,21 +375,6 @@ function handleSelectRequest(){
 
 
 
-// function handleDivision() {
-//     global $db_conn;
-
-//     $portf = $_GET['']
-    
-//     $result = executeSQL("SELECT *
-//                            FROM ")
-
-
-
-
-
-
-
-// }
 
 
 

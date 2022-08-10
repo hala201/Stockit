@@ -158,16 +158,16 @@ VALUES
     (77, '1 Gotham, NY', 1000, 32000000, 'Residential');
 INSERT INTO RealEstate (ID, Address_, BuyPrice, Value_, Type_)
 VALUES
-    (77, '2 Gotham, NY', 2000, 5000000, 'Residential');
+    (69, '2 Gotham, NY', 2000, 5000000, 'Residential');
 INSERT INTO RealEstate (ID, Address_, BuyPrice, Value_, Type_)
 VALUES
-    (77, '3 Gotham, NY', 3000, 5000000, 'Residential');
+    (50, '3 Gotham, NY', 3000, 5000000, 'Residential');
 INSERT INTO RealEstate (ID, Address_, BuyPrice, Value_, Type_)
 VALUES
-    (77, '4 Gotham, NY', 4000, 2000000, 'Residential');
+    (10, '4 Gotham, NY', 4000, 2000000, 'Residential');
 INSERT INTO RealEstate (ID, Address_, BuyPrice, Value_, Type_)
 VALUES
-    (77, '5 Gotham, NY', 5000, 3000000, 'Commercial');
+    (33, '5 Gotham, NY', 5000, 3000000, 'Commercial');
 
 INSERT INTO Agent (ID, Name_)
 VALUES
@@ -290,13 +290,13 @@ VALUES
     ('NASDAQ', 'NY USA');
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
-    ('AMX', 'ON Canada');
+    ('TSX', 'ON Canada');
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
     ('AAPL', 'MH India');
 INSERT INTO StockMarket (smSymbol, Headquarters)
 VALUES
-    ('GOOG', 'LD UK');
+    ('LSE', 'LD UK');
 
 INSERT INTO Company (Name_, Type_, Industry)
 VALUES
@@ -325,10 +325,10 @@ VALUES
     ('WAYNE' , 'QWER1234567890', 10000, 500, 200000, 190000, 'Wayne', 'NASDAQ');
 INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
-    ('STAR' , 'WWER1234567890', 2750, 400, 7500, 4750, 'Star Labs', 'AMX');
+    ('STAR' , 'WWER1234567890', 2750, 400, 7500, 4750, 'Star Labs', 'NYSE');
 INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
-    ('GOOGL' , 'EWER1234567890', 1800, 300, 4800, 3000, 'Alphabet', 'AMZ');
+    ('GOOGL' , 'EWER1234567890', 1800, 300, 4800, 3000, 'Alphabet', 'NASDAQ');
 INSERT INTO Stock (Symbol, AccountNumber, Price, Holding, Value_, Profit, Name_, smSymbol)
 VALUES
     ('APL' , 'RWER1234567890', 4000, 200, 6400, 2400, 'Apple', 'AAPL');
